@@ -1,23 +1,19 @@
-import CardPeca from "./components/CardPeca";
+import type { PecaType } from "../utils/PecaType";
 
-export default function Section3() {
+export default function CardPeca({ data }: { data: PecaType }) {
     return (
-        <section className="px-30 py-10 bg-[#E3D5B8]">
-            <h1 className="font-serif text-[#C33941] text-6xl w-30 flex justify-end">new in</h1>
-
-            
-
+        <>
             <div className="card bg-[#E3D5B8] border border-[#C33941] w-90 shadow-[#C33941] my-5 ">
                 <figure className="px-5 pt-5">
                     <img
-                        src="./minerva.jpg"
-                        alt="minerva"
+                        src={data.foto}
+                        alt="foto"
                         className="rounded-xl" />
                 </figure>
 
                 <div className="px-7 py-4 start">
-                    <h2 className="card-title font-sans font-extrabold text-2xl text-[#C33941]">Minerva</h2>
-                    <p className="font-sans">Mimizinha mto linda da sua mamãe e mto amada</p>
+                    <h2 className="card-title font-sans font-extrabold text-2xl text-[#C33941]">{data.tipo} {data.cor}</h2>
+                    <p className="font-sans">{data.tamanho} | {data.valor}</p>
                     <div className="card-actions justify-between">
                         <div className="btn btn-circle bg-[#E3D5B8] border-[#E3D5B8] text-[#C33941] hover:bg-[#C33941] hover:text-[#E3D5B8]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
@@ -25,13 +21,12 @@ export default function Section3() {
                             </svg>
                         </div>
                         <div className="">
-                            <div className="badge badge-outline mr-2 text-[#C33941]">Fashion</div>
-                            <div className="badge badge-outline text-[#C33941]">Products</div>
+                            <div className="badge badge-outline mr-2 text-[#C33941]">{data.marca}</div>
+                            <div className="badge badge-outline text-[#C33941]">{data.material}</div>
                         </div>
                     </div>
                 </div>
             </div>
-
-        </section>
+        </>
     )
 }

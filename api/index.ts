@@ -1,10 +1,10 @@
 import express from 'express'
 import cors from 'cors'
 
-import routesUsuarios from './routes/usuarios'
+import routesProdutos from './routes/produtos'
+import routesClientes from './routes/clientes'
 import routesLogin from './routes/login'
 import routesSeguranca from './routes/seguranca'
-import routesProdutos from './routes/produtos'
 // import routesVendas from './routes/vendas'
 
 const app = express()
@@ -13,10 +13,10 @@ const port = 3000
 app.use(express.json())
 app.use(cors())
 
-app.use("/usuarios", routesUsuarios)
-app.use("/login", routesLogin)
-app.use("/seguranca", routesSeguranca)
 app.use("/produtos", routesProdutos)
+app.use("/clientes", routesClientes)
+app.use("/clientes/login", routesLogin)
+app.use("/seguranca", routesSeguranca)
 // app.use("/vendas", routesVendas)
 
 app.get('/', (req, res) => {

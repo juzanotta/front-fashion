@@ -7,8 +7,6 @@ const prisma = new PrismaClient()
 const router = Router()
 
 const produtoSchema = z.object({
-  titulo: z.string().min(4,
-    { message: "Título do produto deve possuir, no mínimo, 4 caracteres" }),
   cor: z.string().min(4,
     { message: "Nome da cor deve possuir, no mínimo, 4 caracteres"}),
   marca: z.string().min(2,
@@ -41,11 +39,11 @@ router.post("/", async (req, res) => {
     return
   }
 
-  const { titulo, cor, valor, foto, tamanho, tipo, vendedorId, quantidade } = valida.data
+  const { cor, valor, foto, tamanho, tipo, vendedorId, quantidade } = valida.data
 
   try {
     const produto = await prisma.produto.create({
-      data: { titulo, cor, valor, foto, tamanho, tipo, vendedorId, quantidade}
+      data: { cor, valor, foto, tamanho, tipo, vendedorId, quantidade}
     })
     res.status(201).json(produto)
   } catch (error) {
@@ -75,12 +73,12 @@ router.put("/:id", async (req, res) => {
     return
   }
 
-  const { titulo, cor, valor, foto, tamanho, tipo, vendedorId, quantidade } = valida.data
+  const { cor, valor, foto, tamanho, tipo, vendedorId, quantidade } = valida.data
 
   try {
     const produto = await prisma.produto.update({
       where: { id: Number(id) },
-      data: { titulo, cor, valor, foto, tamanho, tipo, vendedorId, quantidade }
+      data: { cor, valor, foto, tamanho, tipo, vendedorId, quantidade }
     })
     res.status(200).json(produto)
   } catch (error) {

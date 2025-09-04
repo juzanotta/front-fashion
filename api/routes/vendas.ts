@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 const router = Router()
 
 const vendaSchema = z.object({
-  usuarioId: z.number(),
+  clienteId: z.number(),
   produtoId: z.number(),
   quantidade: z.number().positive({ message: "Quantidade deve ser positiva" })
 })
@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
   try {
     const vendas = await prisma.venda.findMany({
       include: {
-        usuario: true,
+        cliente: true,
         produto: true
       }
     })
@@ -34,19 +34,17 @@ router.post("/", async (req, res) => {
     return
   }
 
-  const { usuarioId, produtoId, quantidade } = valida.data
+  const { clienteId, produtoId, quantidade } = valida.data
 
-  // pesquisa para validar o usuario (recebe-se apenas id)
-  const dadousuario = await prisma.usuario.findUnique({
-    where: { id: usuarioId }
+  const dadocliente = await prisma.cliente.findUnique({
+    where: { id: clienteId }
   })
 
-  if (!dadousuario) {
-    res.status(400).json({ erro: "Erro... Código do usuario inválido" })
+  if (!dadocliente) {
+    res.status(400).json({ erro: "Erro... Código do cliente inválido" })
     return
   }
 
-  // pesquisa para validar o produto (recebe-se apenas id)
   const dadoProduto = await prisma.produto.findUnique({
     where: { id: produtoId }
   })
@@ -56,25 +54,23 @@ router.post("/", async (req, res) => {
     return
   }
 
-  // verifica a quantidade em estoque 
   if (dadoProduto.quantidade < quantidade) {
     res.status(400).json({ erro: `Erro... Tem apenas ${dadoProduto.quantidade} unidades em estoque` })
     return
   }
 
-  // verifica se o usuario tem saldo para fazer esta compra
-  if (quantidade * Number(dadoProduto.valor) > Number(dadoUsuario.saldo)) {
-    res.status(400).json({ erro: `Erro... Saldo do usuario é de R$: ${dadoUsuario.saldo}` })
+  if (quantidade * Number(dadoProduto.valor) > Number(dadocliente.saldo)) {
+    res.status(400).json({ erro: `Erro... Saldo do cliente é de R$: ${dadocliente.saldo}` })
     return
   }
 
   try {
-    const [venda, usuario, produto] = await prisma.$transaction([
+    const [venda, cliente, produto] = await prisma.$transaction([
       prisma.venda.create({
-        data: { usuarioId, produtoId, quantidade, valor: Number(dadoProduto.valor) }
+        data: { clienteId, produtoId, quantidade, valor: Number(dadoProduto.valor) }
       }),
-      prisma.usuario.update({
-        where: { id: usuarioId },
+      prisma.cliente.update({
+        where: { id: clienteId },
         data: { saldo: { decrement: quantidade * Number(dadoProduto.valor) } }
       }),
       prisma.produto.update({
@@ -82,7 +78,7 @@ router.post("/", async (req, res) => {
         data: { quantidade: { decrement: quantidade } }
       })
     ])
-    res.status(201).json({ venda, usuario, produto })
+    res.status(201).json({ venda, cliente, produto })
   } catch (error) {
     res.status(400).json({ error })
   }
@@ -95,10 +91,10 @@ router.delete("/:id", async (req, res) => {
 
     const vendaExcluida = await prisma.venda.findUnique({ where: { id: Number(id) } })
 
-    const [venda, usuario, produto] = await prisma.$transaction([
+    const [venda, cliente, produto] = await prisma.$transaction([
       prisma.venda.delete({ where: { id: Number(id) } }),
-      prisma.usuario.update({
-        where: { id: vendaExcluida?.usuarioId },
+      prisma.cliente.update({
+        where: { id: vendaExcluida?.clienteId },
         data: { saldo: { increment: Number(vendaExcluida?.quantidade) * Number(vendaExcluida?.valor) } }
       }),
       prisma.produto.update({
@@ -107,7 +103,7 @@ router.delete("/:id", async (req, res) => {
       })
     ])
 
-    res.status(200).json({ venda, usuario, produto })
+    res.status(200).json({ venda, cliente, produto })
   } catch (error) {
     res.status(400).json({ erro: error })
   }

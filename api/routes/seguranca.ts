@@ -9,13 +9,13 @@ const router = Router()
 
 router.get('/backup', async (req, res) => {
   try {
-    const usuarios = await prisma.usuario.findMany()
+    const clientes = await prisma.cliente.findMany()
     const produtos = await prisma.produto.findMany()
     const vendas = await prisma.venda.findMany()
     const logs = await prisma.log.findMany()
 
     const dadosBackup = {
-      usuarios,
+      clientes,
       produtos,
       vendas,
       logs,
@@ -45,10 +45,10 @@ router.post('/restore', async (req, res) => {
     await prisma.venda.deleteMany()
     await prisma.produto.deleteMany()
     await prisma.log.deleteMany()
-    await prisma.usuario.deleteMany()
+    await prisma.cliente.deleteMany()
 
-    for (const usuario of dados.usuarios) {
-      await prisma.usuario.create({ data: usuario })
+    for (const cliente of dados.clientes) {
+      await prisma.cliente.create({ data: cliente })
     }
 
     for (const produto of dados.produtos) {

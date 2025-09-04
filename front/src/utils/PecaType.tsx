@@ -1,13 +1,14 @@
 export type PecaType = {
     id: number
-    tipo: string
     cor: string
     marca: string
     material: string
-    tamanho: string
     valor: number
     foto: string
     favorito: boolean
+    tamanho: string
+    tipo: string
+    quantidade: number
 }
 
 

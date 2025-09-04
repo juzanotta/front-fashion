@@ -9,28 +9,17 @@ CREATE TYPE "Pagamentos" AS ENUM ('PIX', 'DEBITO', 'CREDITO');
 
 -- CreateTable
 CREATE TABLE "clientes" (
-    "id" SERIAL NOT NULL,
+    "id" VARCHAR(36) NOT NULL,
     "nome" VARCHAR(30) NOT NULL,
     "email" VARCHAR(100) NOT NULL,
     "senha" VARCHAR(40) NOT NULL,
     "cidade" VARCHAR(40) NOT NULL,
     "telefone" VARCHAR(15) NOT NULL,
     "endereco" VARCHAR(50),
-    "usuarioId" INTEGER NOT NULL,
-
-    CONSTRAINT "clientes_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "usuarios" (
-    "id" SERIAL NOT NULL,
-    "nome" VARCHAR(30) NOT NULL,
-    "email" VARCHAR(100) NOT NULL,
-    "senha" VARCHAR(40) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "usuarios_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "clientes_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -42,7 +31,8 @@ CREATE TABLE "vendedores" (
     "telefone" VARCHAR(15) NOT NULL,
     "cidade" VARCHAR(40) NOT NULL,
     "endereco" VARCHAR(50),
-    "usuarioId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "vendedores_pkey" PRIMARY KEY ("id")
 );
@@ -50,7 +40,6 @@ CREATE TABLE "vendedores" (
 -- CreateTable
 CREATE TABLE "produtos" (
     "id" SERIAL NOT NULL,
-    "titulo" VARCHAR(30) NOT NULL,
     "cor" VARCHAR(20) NOT NULL,
     "marca" VARCHAR(20),
     "material" VARCHAR(20),
@@ -72,8 +61,9 @@ CREATE TABLE "vendas" (
     "id" SERIAL NOT NULL,
     "valor" DECIMAL(10,2) NOT NULL,
     "quantidade" SMALLINT NOT NULL,
-    "data" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "clienteId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "clienteId" TEXT NOT NULL,
     "produtoId" INTEGER NOT NULL,
     "vendedorId" INTEGER NOT NULL,
     "pagamento" "Pagamentos" NOT NULL,
@@ -88,7 +78,8 @@ CREATE TABLE "logs" (
     "complemento" VARCHAR(200) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "usuarioId" INTEGER NOT NULL,
+    "clienteId" TEXT NOT NULL,
+    "vendedorId" INTEGER NOT NULL,
 
     CONSTRAINT "logs_pkey" PRIMARY KEY ("id")
 );
@@ -97,16 +88,7 @@ CREATE TABLE "logs" (
 CREATE UNIQUE INDEX "clientes_email_key" ON "clientes"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "usuarios_email_key" ON "usuarios"("email");
-
--- CreateIndex
 CREATE UNIQUE INDEX "vendedores_email_key" ON "vendedores"("email");
-
--- AddForeignKey
-ALTER TABLE "clientes" ADD CONSTRAINT "clientes_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "usuarios"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "vendedores" ADD CONSTRAINT "vendedores_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "usuarios"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "produtos" ADD CONSTRAINT "produtos_vendedorId_fkey" FOREIGN KEY ("vendedorId") REFERENCES "vendedores"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -121,4 +103,7 @@ ALTER TABLE "vendas" ADD CONSTRAINT "vendas_produtoId_fkey" FOREIGN KEY ("produt
 ALTER TABLE "vendas" ADD CONSTRAINT "vendas_vendedorId_fkey" FOREIGN KEY ("vendedorId") REFERENCES "vendedores"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "logs" ADD CONSTRAINT "logs_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "usuarios"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "logs" ADD CONSTRAINT "logs_clienteId_fkey" FOREIGN KEY ("clienteId") REFERENCES "clientes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "logs" ADD CONSTRAINT "logs_vendedorId_fkey" FOREIGN KEY ("vendedorId") REFERENCES "vendedores"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

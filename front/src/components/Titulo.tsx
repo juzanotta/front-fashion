@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function Titulo() {
     return (
         <>
-            <div className="navbar shadow-sm px-30 bg-[#E3D5B8]">
+            <div className="navbar shadow-sm px-30 bg-[#E3D5B8] fixed top-0 left-0 w-full h-16 z-50">
                 
                 <div className="navbar-start">
                     <a href="#categorias" className="font-sans font-normal text-sm lowercase tracking-wider px-3 text-[#C33941] hover:underline">Categorias</a>

@@ -1,6 +1,6 @@
 export default function Inclusao() {
     return (
-        <div className="bg-[#E3D5B8] h-screen px-30 py-10 flex">
+        <div className="bg-[#E3D5B8] h-screen px-33 py-25  flex">
 
             <h1 className="font-serif text-[#C33941] text-5xl w-30 ">novo produto</h1>
 

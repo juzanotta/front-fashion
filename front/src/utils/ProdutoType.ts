@@ -1,4 +1,4 @@
-export type PecaType = {
+export type ProdutoType = {
     id: number
     cor: string
     marca: string
@@ -9,7 +9,6 @@ export type PecaType = {
     tamanho: string
     tipo: string
     quantidade: number
+    createdAt: Date
+    updatedAt: Date
 }
-
-
-// id, tipo de peça, cor, marca, tamanho, valor. material, foto, favorito

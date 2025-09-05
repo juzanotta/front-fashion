@@ -10,6 +10,6 @@ type ClienteStore = {
 
 export const useClienteStore = create<ClienteStore>((set) => ({
     cliente: {} as ClienteType,
-    logaCliente: (clienteLogado) => set({cliente: clienteLogado}),
+    logaCliente: (clienteLogado: any) => set({cliente: clienteLogado}),
     deslogaCliente: () => set({cliente: {} as ClienteType})
 }))

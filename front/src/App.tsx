@@ -15,7 +15,6 @@ export default function App() {
     async function buscaDados() {
       const response = await fetch(`${apiUrl}/produtos`)
       const dados = await response.json()
-      //      console.log(dados)
       setProdutos(dados)
     }
     buscaDados()
@@ -132,15 +131,14 @@ export default function App() {
 
       {/* Próxima seção */}
       {/* <Section3 /> */}
-      <InputPesquisa setProdutos={setProdutos} />
-      <div className="max-w-7xl mx-auto">
-        <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-          Veículos <span className="underline underline-offset-3 decoration-8 decoration-orange-400 dark:decoration-orange-600">em destaque</span>
-        </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+      <section className="px-30 py-10 bg-[#E3D5B8]">
+        <h1 className="font-serif text-[#C33941] text-6xl w-30 flex justify-end">new in</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
           {listaProdutos}
         </div>
-      </div>
+      </section>
+      {InputPesquisa}
+      {/* esse inputPesquisa ta o mesmo q o do edecio n liga pra ele n consegui terminar */}
     </>
   );
 }

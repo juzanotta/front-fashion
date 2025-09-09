@@ -16,7 +16,6 @@ export function InputPesquisa({ setProdutos }: InputPesquisaProps) {
     const { register, handleSubmit, reset } = useForm<Inputs>()
 
     async function enviaPesquisa(data: Inputs) {
-        // alert(data.termo)
         if (data.termo.length < 2) {
             toast.error("Informe, no mínimo, 2 caracteres")
             return
@@ -24,7 +23,7 @@ export function InputPesquisa({ setProdutos }: InputPesquisaProps) {
 
         const response = await fetch(`${apiUrl}/produtos/pesquisa/${data.termo}`)
         const dados = await response.json()
-        // console.log(dados)
+
         setProdutos(dados)
     }
 

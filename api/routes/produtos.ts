@@ -18,8 +18,7 @@ const produtoSchema = z.object({
   favorito: z.boolean().optional(),
   tamanho: z.nativeEnum(Tamanhos),
   tipo: z.nativeEnum(Tipos),
-  quantidade: z.number().positive(),
-  vendedorId: z.number()
+  quantidade: z.number().positive()
 })
 
 router.get("/", async (req, res) => {
@@ -39,11 +38,11 @@ router.post("/", async (req, res) => {
     return
   }
 
-  const { cor, valor, foto, tamanho, tipo, vendedorId, quantidade } = valida.data
+  const { cor, valor, foto, tamanho, tipo, quantidade } = valida.data
 
   try {
     const produto = await prisma.produto.create({
-      data: { cor, valor, foto, tamanho, tipo, vendedorId, quantidade}
+      data: { cor, valor, foto, tamanho, tipo, quantidade}
     })
     res.status(201).json(produto)
   } catch (error) {
@@ -73,17 +72,71 @@ router.put("/:id", async (req, res) => {
     return
   }
 
-  const { cor, valor, foto, tamanho, tipo, vendedorId, quantidade } = valida.data
+  const { cor, valor, foto, tamanho, tipo, quantidade } = valida.data
 
   try {
     const produto = await prisma.produto.update({
       where: { id: Number(id) },
-      data: { cor, valor, foto, tamanho, tipo, vendedorId, quantidade }
+      data: { cor, valor, foto, tamanho, tipo, quantidade }
     })
     res.status(200).json(produto)
   } catch (error) {
     res.status(400).json({ error })
   }
 })
+
+router.get("/pesquisa/:termo", async (req, res) => {
+  const { termo } = req.params;
+
+  // tenta converter para número
+  const termoNumero = Number(termo);
+
+  // caso 1: termo é texto
+  if (isNaN(termoNumero)) {
+    try {
+      const produtos = await prisma.produto.findMany({
+        where: {
+          OR: [
+            { tipo: termo.toUpperCase() as Tipos },
+            { marca: { contains: termo, mode: "insensitive" } },
+            { cor: { contains: termo, mode: "insensitive" } },
+            { material: { contains: termo, mode: "insensitive" } },
+          ],
+        },
+        orderBy: { createdAt: "desc" },
+      });
+      res.status(200).json(produtos);
+    } catch (error) {
+      res.status(500).json({ erro: error });
+    }
+
+  } else if (termoNumero <= 20) {
+    try {
+      const produtos = await prisma.produto.findMany({
+        where: {
+          OR: [
+            { quantidade: termoNumero },
+          ],
+        },
+      });
+      res.status(200).json(produtos);
+    } catch (error) {
+      res.status(500).json({ erro: error });
+    }
+
+  } else {
+    try {
+      const produtos = await prisma.produto.findMany({
+        where: {
+          valor: { lte: termoNumero },
+        },
+        orderBy: { valor: "asc" },
+      });
+      res.status(200).json(produtos);
+    } catch (error) {
+      res.status(500).json({ erro: error });
+    }
+  }
+});
 
 export default router

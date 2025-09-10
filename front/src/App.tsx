@@ -1,9 +1,9 @@
 // import Section3 from "./Section3";
 import { CardProduto } from "./components/CardProduto";
-import { InputPesquisa } from "./components/InputPesquisa";
 import type { ProdutoType } from "./utils/ProdutoType";
 import { useEffect, useState, useRef } from "react";
 import { useClienteStore } from "./context/ClienteContext"
+import Titulo from "./components/Titulo";
 
 const apiUrl = import.meta.env.VITE_API_URL
 
@@ -50,6 +50,8 @@ export default function App() {
 
   return (
     <>
+    <Titulo setProdutos={setProdutos} />
+    
       {/* Banner inicial */}
       <section className="bg-[#C33941] h-140 px-50 pt-15 flex flex-col justify-center items-center">
         <img src="./avenida.png" alt="" className="w-50 " />
@@ -137,8 +139,6 @@ export default function App() {
           {listaProdutos}
         </div>
       </section>
-      {InputPesquisa}
-      {/* esse inputPesquisa ta o mesmo q o do edecio n liga pra ele n consegui terminar */}
     </>
   );
 }

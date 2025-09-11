@@ -37,7 +37,7 @@ export function InputPesquisa({ setProdutos }: InputPesquisaProps) {
 return (
     <form onSubmit={handleSubmit(enviaPesquisa)} className="relative">
         <svg
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#C33941]"
+            className="absolute left-3 top-4 transform -translate-y-1/2 w-5 h-5 text-[#C33941]"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -55,7 +55,7 @@ return (
             type="search"
             placeholder="Pesquisar"
             {...register("termo")}
-            className="pl-10 pr-4 h-8 w-64 border rounded-full border-[#C33941] font-sans text-sm text-[#C33941] placeholder:text-gray-400 focus:ring-[#C33941] focus:border-[#C33941]"
+            className="pl-10 pr-4 h-8 w-64 border rounded-full border-[#C33941] font-sans text-sm text-[#C33941] placeholder:text[##C33941] focus:ring-[#C33941] focus:border-[#C33941]"
         />
     </form>
 );

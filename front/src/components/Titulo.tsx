@@ -1,5 +1,4 @@
 import type { ProdutoType } from "../utils/ProdutoType";
-import { InputPesquisa } from "./InputPesquisa";
 import { Link } from "react-router-dom";
 
 type TituloProps = {
@@ -12,8 +11,8 @@ export default function Titulo({ setProdutos }: TituloProps) {
             <div className="navbar shadow-sm px-30 bg-[#E3D5B8] fixed top-0 left-0 w-full h-16 z-50">
 
                 <div className="navbar-start">
-                    <a href="#categorias" className="font-sans font-normal text-sm lowercase tracking-wider px-3 text-[#C33941] hover:underline">Categorias</a>
-                    <Link to="/inclusao" className="font-sans font-normal text-sm lowercase tracking-wider px-3 text-[#C33941] hover:underline">Incluir</Link>
+                    {/* <a href="#categorias" className="font-sans font-normal text-sm lowercase tracking-wider px-3 text-[#C33941] hover:underline">Categorias</a>
+                    <Link to="/inclusao" className="font-sans font-normal text-sm lowercase tracking-wider px-3 text-[#C33941] hover:underline">Incluir</Link> */}
                     <Link to="/listagem" className="font-sans font-normal text-sm lowercase tracking-wider px-3 text-[#C33941] hover:underline">produtos</Link>
                 </div>
 
@@ -21,7 +20,7 @@ export default function Titulo({ setProdutos }: TituloProps) {
                     <Link to="/" className="text-2xl uppercase font-medium tracking-wider text-[#C33941] font-serif hover:font-bold" >Avenida</Link>
                 </div>
                 <div className="flex navbar-end gap-2">
-                    <InputPesquisa setProdutos={setProdutos} />
+                    {/* <InputPesquisa setProdutos={setProdutos} />  */}
 
                     <div className="dropdown dropdown-end">
                         <Link to="/favoritos" className="btn btn-circle bg-[#E3D5B8] border-[#E3D5B8] text-[#C33941] hover:bg-[#C33941] hover:text-[#E3D5B8] mb-1 ml-4">

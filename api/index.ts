@@ -5,7 +5,7 @@ import routesProdutos from './routes/produtos'
 import routesClientes from './routes/clientes'
 import routesLogin from './routes/login'
 import routesSeguranca from './routes/seguranca'
-// import routesVendas from './routes/vendas'
+import routesVendas from './routes/vendas'
 
 const app = express()
 const port = 3000
@@ -17,7 +17,7 @@ app.use("/produtos", routesProdutos)
 app.use("/clientes", routesClientes)
 app.use("/clientes/login", routesLogin)
 app.use("/seguranca", routesSeguranca)
-// app.use("/vendas", routesVendas)
+app.use("/vendas", routesVendas)
 
 app.get('/', (req, res) => {
   res.send('API: Avenida Fashion')

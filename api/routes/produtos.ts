@@ -2,29 +2,68 @@ import { PrismaClient, Tamanhos, Tipos } from '@prisma/client'
 import { Router } from 'express'
 import { z } from 'zod'
 
+import { verificaToken } from '../middewares/verificaToken'
+
 const prisma = new PrismaClient()
 
 const router = Router()
 
 const produtoSchema = z.object({
   cor: z.string().min(4,
-    { message: "Nome da cor deve possuir, no mínimo, 4 caracteres"}),
+    { message: "Nome da cor deve possuir, no mínimo, 4 caracteres" }),
   marca: z.string().min(2,
-    { message: "Nome da marca deve possuir, no mínimo, 2 caracteres"}).optional(),
+    { message: "Nome da marca deve possuir, no mínimo, 2 caracteres" }).optional(),
   material: z.string().min(2,
-    { message: "Nome do material deve possuir, no mínimo, 2 caracteres"}).optional(),
-  valor: z.number().positive({ message: "Valor deve ser um valor positivo"}),
+    { message: "Nome do material deve possuir, no mínimo, 2 caracteres" }).optional(),
+  valor: z.number().positive({ message: "Valor deve ser um valor positivo" }),
   foto: z.string(),
   favorito: z.boolean().optional(),
   tamanho: z.nativeEnum(Tamanhos),
   tipo: z.nativeEnum(Tipos),
-  quantidade: z.number().positive()
+  adminId: z.string().uuid()
 })
 
 router.get("/", async (req, res) => {
   try {
-    const produtos = await prisma.produto.findMany()
+    const produtos = await prisma.produto.findMany({
+      where: {
+        ativo: true,
+      },
+      orderBy: {
+        id: 'desc'
+      }
+    })
     res.status(200).json(produtos)
+  } catch (error) {
+    res.status(500).json({ erro: error })
+  }
+})
+
+router.get("/favoritos", async (req, res) => {
+  try {
+    const produtos = await prisma.produto.findMany({
+      where: {
+        ativo: true,
+        favorito: true
+      },
+      orderBy: {
+        id: 'desc'
+      }
+    })
+    res.status(200).json(produtos)
+  } catch (error) {
+    res.status(500).json({ erro: error })
+  }
+})
+
+router.get("/:id", async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const produto = await prisma.produto.findFirst({
+      where: { id: Number(id) }
+    })
+    res.status(200).json(produto)
   } catch (error) {
     res.status(500).json({ erro: error })
   }
@@ -38,11 +77,11 @@ router.post("/", async (req, res) => {
     return
   }
 
-  const { cor, valor, foto, tamanho, tipo, quantidade } = valida.data
+  const { cor, marca, material, valor, foto, favorito, tamanho, tipo, adminId } = valida.data
 
   try {
     const produto = await prisma.produto.create({
-      data: { cor, valor, foto, tamanho, tipo, quantidade}
+      data: { cor, marca, material, valor, foto, favorito, tamanho, tipo, adminId }
     })
     res.status(201).json(produto)
   } catch (error) {
@@ -50,13 +89,25 @@ router.post("/", async (req, res) => {
   }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", verificaToken,async (req, res) => {
   const { id } = req.params
 
   try {
-    const produto = await prisma.produto.delete({
-      where: { id: Number(id) }
+    const produto = await prisma.produto.update({
+      where: { id: Number(id) },
+      data: { ativo: false }
     })
+
+    const adminId = req.userLogadoId as string
+    const adminNome = req.userLogadoNome as string
+
+    const descricao = `Exclusão de: ${produto}`
+    const complemento = `Admin: ${adminNome}`
+
+    const log = await prisma.log.create({
+      data: { descricao, complemento, adminId }
+    })
+
     res.status(200).json(produto)
   } catch (error) {
     res.status(400).json({ erro: error })
@@ -72,12 +123,12 @@ router.put("/:id", async (req, res) => {
     return
   }
 
-  const { cor, valor, foto, tamanho, tipo, quantidade } = valida.data
+  const { cor, marca, material, valor, foto, favorito, tamanho, tipo, adminId } = valida.data
 
   try {
     const produto = await prisma.produto.update({
       where: { id: Number(id) },
-      data: { cor, valor, foto, tamanho, tipo, quantidade }
+      data: { cor, marca, material, valor, foto, favorito, tamanho, tipo, adminId }
     })
     res.status(200).json(produto)
   } catch (error) {
@@ -88,36 +139,20 @@ router.put("/:id", async (req, res) => {
 router.get("/pesquisa/:termo", async (req, res) => {
   const { termo } = req.params;
 
-  // tenta converter para número
   const termoNumero = Number(termo);
 
-  // caso 1: termo é texto
   if (isNaN(termoNumero)) {
     try {
       const produtos = await prisma.produto.findMany({
         where: {
+          ativo: true,
           OR: [
             { tipo: termo.toUpperCase() as Tipos },
             { marca: { contains: termo, mode: "insensitive" } },
             { cor: { contains: termo, mode: "insensitive" } },
             { material: { contains: termo, mode: "insensitive" } },
-          ],
-        },
-        orderBy: { createdAt: "desc" },
-      });
-      res.status(200).json(produtos);
-    } catch (error) {
-      res.status(500).json({ erro: error });
-    }
-
-  } else if (termoNumero <= 20) {
-    try {
-      const produtos = await prisma.produto.findMany({
-        where: {
-          OR: [
-            { quantidade: termoNumero },
-          ],
-        },
+          ]
+        }
       });
       res.status(200).json(produtos);
     } catch (error) {
@@ -125,16 +160,29 @@ router.get("/pesquisa/:termo", async (req, res) => {
     }
 
   } else {
-    try {
-      const produtos = await prisma.produto.findMany({
-        where: {
-          valor: { lte: termoNumero },
-        },
-        orderBy: { valor: "asc" },
-      });
-      res.status(200).json(produtos);
-    } catch (error) {
-      res.status(500).json({ erro: error });
+    if (termoNumero <= 3000) {
+      try {
+        const produtos = await prisma.produto.findMany({
+          where: {
+            ativo: true,
+          }
+        })
+        res.status(200).json(produtos)
+      } catch (error) {
+        res.status(500).json({ erro: error })
+      }
+    } else {
+      try {
+        const produtos = await prisma.produto.findMany({
+          where: {
+            ativo: true,
+            valor: { lte: termoNumero }
+          }
+        })
+        res.status(200).json(produtos)
+      } catch (error) {
+        res.status(500).json({ erro: error })
+      }
     }
   }
 });

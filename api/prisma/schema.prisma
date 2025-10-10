@@ -13,35 +13,53 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Admin {
+  id        String    @id @default(uuid()) @db.VarChar(36)
+  nome      String    @db.VarChar(60)
+  email     String    @db.VarChar(40)
+  senha     String    @db.VarChar(60)
+  nivel     Int       @default(2) @db.SmallInt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  vendas    Venda[]
+  produtos  Produto[]
+  logs      Log[]
+
+  @@map("admins")
+}
+
 model Cliente {
-  id             String       @db.VarChar(36) @id @default(uuid())
-  nome           String       @db.VarChar(30)
-  email          String       @db.VarChar(100) @unique()
-  senha          String       @db.VarChar(40)
-  cidade         String       @db.VarChar(40)
-  telefone       String       @db.VarChar(15)
-  endereco       String?      @db.VarChar(50)
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt()
-  vendas         Venda[]
-  logs           Log[]
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  nome      String   @db.VarChar(30)
+  email     String   @unique() @db.VarChar(100)
+  senha     String   @db.VarChar(60)
+  cidade    String   @db.VarChar(40)
+  telefone  String   @db.VarChar(15)
+  endereco  String?  @db.VarChar(50)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+  vendas    Venda[]
+
   @@map("clientes")
 }
 
 model Produto {
-  id             Int          @id @default(autoincrement())
-  cor            String       @db.VarChar(20)
-  marca          String?      @db.VarChar(20)
-  material       String?      @db.VarChar(20)
-  valor          Decimal      @db.Decimal(10, 2)
-  foto           String
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt()
-  favorito       Boolean      @default(false)
-  tamanho        Tamanhos     @default(M)
-  tipo           Tipos        @default(BLUSA)
-  quantidade     Int          @db.SmallInt  
-  vendas         Venda[]
+  id         Int      @id @default(autoincrement())
+  cor        String   @db.VarChar(20)
+  marca      String?  @db.VarChar(20)
+  material   String?  @db.VarChar(20)
+  valor      Decimal  @db.Decimal(10, 2)
+  foto       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt()
+  favorito   Boolean  @default(false)
+  tamanho    Tamanhos @default(M)
+  tipo       Tipos    @default(BLUSA)
+  vendas     Venda[]
+  admin      Admin?   @relation(fields: [adminId], references: [id])
+  adminId    String?  @db.VarChar(36)
+  ativo      Boolean  @default(true)
+
   @@map("produtos")
 }
 
@@ -66,16 +84,19 @@ enum Tipos {
 }
 
 model Venda {
-  id             Int          @id @default(autoincrement())
-  valor          Decimal      @db.Decimal(10,2)
-  quantidade     Int          @db.SmallInt
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  cliente        Cliente      @relation(fields: [clienteId], references: [id])
-  clienteId      String
-  produto        Produto      @relation(fields: [produtoId], references: [id])
-  produtoId      Int
-  pagamento      Pagamentos
+  id        Int          @id @default(autoincrement())
+  cliente   Cliente      @relation(fields: [clienteId], references: [id])
+  clienteId String
+  produto   Produto      @relation(fields: [produtoId], references: [id])
+  produtoId Int
+  valor     Decimal      @db.Decimal(10, 2)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  Admin     Admin?       @relation(fields: [adminId], references: [id])
+  adminId   String?      @db.VarChar(36)
+  pagamento Pagamentos
+  status    StatusPedido @default(PENDENTE)
+
   @@map("vendas")
 }
 
@@ -85,13 +106,21 @@ enum Pagamentos {
   CREDITO
 }
 
+enum StatusPedido {
+  PENDENTE
+  ENVIADO
+  ENTREGUE
+  CANCELADO
+}
+
 model Log {
-  id            Int         @id @default(autoincrement())
-  descricao     String      @db.VarChar(60)
-  complemento   String      @db.VarChar(200)
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  cliente       Cliente     @relation(fields: [clienteId], references: [id])
-  clienteId     String
+  id          Int      @id @default(autoincrement())
+  Admin       Admin?   @relation(fields: [adminId], references: [id])
+  adminId     String?  @db.VarChar(36)
+  descricao   String   @db.VarChar(60)
+  complemento String   @db.VarChar(200)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
   @@map("logs")
 }

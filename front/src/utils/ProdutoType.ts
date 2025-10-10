@@ -8,7 +8,6 @@ export type ProdutoType = {
     favorito: boolean
     tamanho: string
     tipo: string
-    quantidade: number
     createdAt: Date
     updatedAt: Date
 }

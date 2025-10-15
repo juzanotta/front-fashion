@@ -11,7 +11,6 @@ const ClienteContext = createContext({
   logaCliente: (dados: any) => {},
 });
 
-// Hook de espaço reservado para usar o contexto do cliente
 const useClienteStore = () => useContext(ClienteContext);
 
 export default function App() {
@@ -74,13 +73,11 @@ export default function App() {
     <ClienteContext.Provider value={{ logaCliente: () => {} }}>
       <Titulo setProdutos={setProdutos} />
 
-      {/* Banner inicial */}
       <section className="bg-[#C33941] h-140 px-50 pt-15 flex flex-col justify-center items-center">
         <img src="/avenida.png" alt="Avenida" className="w-50 " />
         <img src="/fashion.png" alt="Fashion" className="w-150 " />
       </section>
 
-      {/* Carrossel de tipos */}
       <section
         id="tipos"
         className="h-145 w-full bg-[url('/background2.png')] bg-cover bg-center px-30 py-10"
@@ -143,7 +140,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Botões */}
           <button
             onClick={scrollLeft}
             className="absolute right-265 top-40 btn btn-circle btn-ghost text-[#C33941]"
@@ -159,8 +155,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Próxima seção */}
-      <div className="bg-[#E3D5B8] h-full px-33 py-23 ">
+      <div className="bg-[#FFFFE7] h-full px-33 py-23 ">
         <h1 className="font-serif text-[#C33941] text-6xl w-30 flex justify-end">new in</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-8">
           {listaProdutos}

@@ -55,7 +55,7 @@ return (
             type="search"
             placeholder="Pesquisar"
             {...register("termo")}
-            className="pl-10 pr-4 h-8 w-64 border rounded-full border-[#C33941] font-sans text-sm text-[#C33941] placeholder:text[##C33941] focus:ring-[#C33941] focus:border-[#C33941]"
+            className="pl-10 pr-4 h-8 w-64 border rounded-full border-[#C33941] font-sans text-sm text-[#C33941] placeholder:text[#C33941] focus:ring-[#C33941] focus:border-[#C33941]"
         />
     </form>
 );

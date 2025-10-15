@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { ProdutoType } from "../utils/ProdutoType";
 
 export function CardProduto({ data }: { data: ProdutoType }) {
@@ -12,7 +11,7 @@ export function CardProduto({ data }: { data: ProdutoType }) {
     }
 
     return (
-        <div className="card bg-[#E3D5B8] border border-[#C33941] w-75 shadow-[#C33941]">
+        <div className="card bg-[#FFFFE7] border border-[#C33941] w-75 shadow-[#C33941]">
             <figure className="px-5 pt-5">
                 <img
                     src={data.foto}
@@ -38,7 +37,7 @@ export function CardProduto({ data }: { data: ProdutoType }) {
                             </div>
                         )}
                     </div>
-                    <div className="btn btn-circle bg-[#E3D5B8] border-[#E3D5B8] text-[#C33941] hover:bg-[#C33941] hover:text-[#E3D5B8] pt-4">
+                    <div className="btn btn-circle bg-[#FFFFE7] border-[#FFFFE7] text-[#C33941] hover:bg-[#C33941] hover:text-[#FFFFE7] pt-4">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                         </svg>

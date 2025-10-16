@@ -5,7 +5,7 @@ type TituloProps = {
     setProdutos: React.Dispatch<React.SetStateAction<ProdutoType[]>>;
 };
 
-export default function Titulo({ setProdutos }: TituloProps) {
+export default function Titulo({ }: TituloProps) {
     return (
         <>
             <div className="navbar shadow-sm px-30 bg-[#FFFFE7] fixed top-0 left-0 w-full h-16 z-50">

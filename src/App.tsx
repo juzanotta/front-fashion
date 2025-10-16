@@ -1,21 +1,17 @@
 import { CardProduto } from "./components/CardProduto";
 import type { ProdutoType } from "./utils/ProdutoType";
-import { useEffect, useState, useRef, createContext, useContext } from "react";
+import { useEffect, useState, useRef } from "react";
 import Titulo from "./components/Titulo";
 import { useNavigate } from "react-router-dom";
+import { useClienteStore } from "./context/ClienteContext";
 
 const apiUrl = import.meta.env.VITE_API_URL
 
-const ClienteContext = createContext({
-  logaCliente: (dados: any) => {},
-});
-
-const useClienteStore = () => useContext(ClienteContext);
-
 export default function App() {
-  const navigate = useNavigate();
   const [produtos, setProdutos] = useState<ProdutoType[]>([])
   const { logaCliente } = useClienteStore();
+
+  const navigate = useNavigate();
 
   function handleTipoClick(tipo: string) {
     navigate(`/produtos?tipo=${tipo}`);
@@ -34,21 +30,17 @@ export default function App() {
     buscaDados();
 
     async function buscaCliente(id: string) {
-      try {
-        const response = await fetch(`${apiUrl}/clientes/${id}`);
-        const dados = await response.json();
-        logaCliente(dados);
-      } catch (error) {
-        console.error("Erro ao buscar cliente:", error);
-      }
+      const response = await fetch(`${apiUrl}/clientes/${id}`);
+      const dados = await response.json();
+      logaCliente(dados);
     }
     if (localStorage.getItem("clienteKey")) {
       const idCliente = localStorage.getItem("clienteKey");
       if (idCliente) {
-        buscaCliente(idCliente);
+        buscaCliente(idCliente as string);
       }
     }
-  }, [logaCliente]);
+  }, []);
 
   const listaProdutos = produtos.map(produto => (
     <CardProduto data={produto} key={produto.id} />
@@ -69,7 +61,7 @@ export default function App() {
   };
 
   return (
-    <ClienteContext.Provider value={{ logaCliente: () => {} }}>
+    <>
       <Titulo setProdutos={setProdutos} />
 
       <section className="bg-[#C33941] h-140 px-50 pt-15 flex flex-col justify-center items-center">
@@ -92,7 +84,7 @@ export default function App() {
           >
             <div className="carousel-item flex flex-col items-center cursor-pointer"
               onClick={() => handleTipoClick("CALCA")}>
-              <img src="/pants.jpg" className="rounded-box h-80 object-cover" alt="Calças"/>
+              <img src="/pants.jpg" className="rounded-box h-80 object-cover" alt="Calças" />
               <p className="font-serif lowercase text-[#C33941] text-xl font-medium pt-2">
                 calças
               </p>
@@ -116,7 +108,7 @@ export default function App() {
 
             <div className="carousel-item flex flex-col items-center cursor-pointer"
               onClick={() => handleTipoClick("BOLSA")}>
-              <img src="/purse.jpg" className="rounded-box h-80 object-cover" alt="Bolsas"/>
+              <img src="/purse.jpg" className="rounded-box h-80 object-cover" alt="Bolsas" />
               <p className="font-serif lowercase text-[#C33941] text-xl font-medium pt-2">
                 bolsas
               </p>
@@ -124,7 +116,7 @@ export default function App() {
 
             <div className="carousel-item flex flex-col items-center cursor-pointer"
               onClick={() => handleTipoClick("SAIA")}>
-              <img src="/skirt.jpg" className="rounded-box h-80 object-cover" alt="Saias"/>
+              <img src="/skirt.jpg" className="rounded-box h-80 object-cover" alt="Saias" />
               <p className="font-serif lowercase text-[#C33941] text-xl font-medium pt-2">
                 saias
               </p>
@@ -132,7 +124,7 @@ export default function App() {
 
             <div className="carousel-item flex flex-col items-center cursor-pointer"
               onClick={() => handleTipoClick("CALCADO")}>
-              <img src="/shoes.jpg" className="rounded-box h-80 object-cover" alt="Sapatos"/>
+              <img src="/shoes.jpg" className="rounded-box h-80 object-cover" alt="Sapatos" />
               <p className="font-serif lowercase text-[#C33941] text-xl font-medium pt-2">
                 sapatos
               </p>
@@ -160,6 +152,6 @@ export default function App() {
           {listaProdutos}
         </div>
       </div>
-    </ClienteContext.Provider>
+    </>
   );
 }

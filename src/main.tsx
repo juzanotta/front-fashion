@@ -7,7 +7,6 @@ import App from './App.tsx'
 import Layout from './Layout.tsx'
 import Inclusao from './Inclusao.tsx'
 import Listagem from './Listagem.tsx'
-import Pesquisa from './Pesquisa.tsx'
 import Favoritos from './Favoritos.tsx'
 import Login from './Login.tsx'
 

@@ -1,4 +1,3 @@
-// import Section3 from "./Section3";
 import { CardProduto } from "./components/CardProduto";
 import type { ProdutoType } from "./utils/ProdutoType";
 import { useEffect, useState, useRef, createContext, useContext } from "react";

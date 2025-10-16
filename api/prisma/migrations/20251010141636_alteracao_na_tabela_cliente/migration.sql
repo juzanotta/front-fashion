@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "clientes" ALTER COLUMN "senha" SET DATA TYPE VARCHAR(60);

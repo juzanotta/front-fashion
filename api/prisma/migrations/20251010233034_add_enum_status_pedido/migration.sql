@@ -1,2 +1,0 @@
--- CreateEnum
-CREATE TYPE "StatusPedido" AS ENUM ('PENDENTE', 'ENVIADO', 'ENTREGUE', 'CANCELADO');

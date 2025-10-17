@@ -1,8 +1,8 @@
 export type ProdutoType = {
     id: number
     cor: string
-    marca: string
-    material: string
+    marca: string?
+    material: string?
     valor: number
     foto: string
     favorito: boolean

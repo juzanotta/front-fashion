@@ -46,7 +46,7 @@ export default function Login() {
 
     return (
         <>
-        <section className="bg-[#FFFFE7] dark:bg-[#C33941]">
+        <section className="bg-[#F1EEE7] dark:bg-[#C33941]">
             <p style={{ height: 110 }}></p>
             <div className="flex flex-col items-center md:h-screen">
                 <div className="w-full flex flex-col items- rounded-lg  dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -59,14 +59,14 @@ export default function Login() {
                             <div>
                                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-[#C33941] dark:text-white pl-2">e-mail</label>
                                 <input type="email" id="email" 
-                                       className="bg-[#FFFFE7] border border-[#C33941] text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                                       className="bg-[#F1EEE7] border border-[#C33941] text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                                        required 
                                        {...register("email")} />
                             </div>
                             <div>
                                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-[#C33941]  dark:text-white pl-2">senha</label>
                                 <input type="password" id="password" 
-                                       className="bg-[#FFFFE7] border border-[#C33941] text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                                       className="bg-[#F1EEE7] border border-[#C33941] text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                                        required 
                                        {...register("senha")} />
                             </div>
@@ -75,7 +75,7 @@ export default function Login() {
                                     <div className="flex items-center h-5">
                                         <input id="remember" 
                                                aria-describedby="remember" type="checkbox" 
-                                               className="w-4 h-4 border border-[#C33941] rounded bg-[#FFFFE7] focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800 cursor-pointer" 
+                                               className="w-4 h-4 border border-[#C33941] rounded bg-[#F1EEE7] focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800 cursor-pointer" 
                                                {...register("manter")} />
                                     </div>
                                     <div className="ml-3 text-sm">
@@ -84,7 +84,7 @@ export default function Login() {
                                 </div>
                                 <a href="#" className="text-sm font-medium text-[#C33941] hover:underline dark:text-primary-500">esqueceu sua senha? :(</a>
                             </div>
-                            <button type="submit" className="w-full text-[#FFFFE7] bg-[#C33941] hover:bg-[#FFFFE7] hover:text-[#C33941] border border-[#C33941] focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer">
+                            <button type="submit" className="w-full text-[#F1EEE7] bg-[#C33941] hover:bg-[#F1EEE7] hover:text-[#C33941] border border-[#C33941] focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer">
                                 entrar
                             </button>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">

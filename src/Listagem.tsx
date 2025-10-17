@@ -4,6 +4,7 @@ import type { ProdutoType } from "./utils/ProdutoType"
 import { useClienteStore } from "./context/ClienteContext"
 import { InputPesquisa } from "./components/InputPesquisa"
 import { useSearchParams } from "react-router-dom"
+import Titulo from "./components/Titulo"
 
 const apiUrl = import.meta.env.VITE_API_URL
 
@@ -47,7 +48,9 @@ export default function Listagem() {
     }, [logaCliente]);
 
     return (
-        <div className="bg-[#E3D5B8] h-full px-33 py-23 ">
+        <>
+        <Titulo setProdutos={setProdutos} />
+        <div className="bg-[#F1EEE7] h-full px-33 py-23 ">
             <div className="flex justify-between pb-9 items-center">
                 <h1 className="font-serif text-[#C33941] text-5xl w-30">produtos</h1>
                 <InputPesquisa setProdutos={setProdutos} />
@@ -62,5 +65,6 @@ export default function Listagem() {
                 )}
             </div>
         </div>
+                </>
     );
 }

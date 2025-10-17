@@ -1,6 +1,6 @@
 export default function Inclusao() {
     return (
-        <div className="bg-[#FFFFE7] h-screen px-33 py-25  flex">
+        <div className="bg-[#F1EEE7] h-screen px-33 py-25  flex">
 
             <h1 className="font-serif text-[#C33941] text-5xl w-30 ">novo produto</h1>
 
@@ -64,7 +64,7 @@ export default function Inclusao() {
                     <label htmlFor="" className="peer-focus:font-medium absolute text-sm text-[#C33941] dark:text-[#C33941] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[#D7A278] peer-focus:dark:text-[#C33941] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Foto (URL)</label>
                 </div>
 
-                <button type="submit" className="text-[#FFFFE7] bg-[#D7A278] hover:bg-[#C33941] hover:text-[#D7A278] border border-[#C33941] focus:ring-4 focus:outline-none focus:ring-[#D7A278] font-medium rounded-lg text-m w-full sm:w-auto px-7 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Enviar</button>
+                <button type="submit" className="text-[#F1EEE7] bg-[#D7A278] hover:bg-[#C33941] hover:text-[#D7A278] border border-[#C33941] focus:ring-4 focus:outline-none focus:ring-[#D7A278] font-medium rounded-lg text-m w-full sm:w-auto px-7 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Enviar</button>
             </form>
 
             <div className="w-27"></div>

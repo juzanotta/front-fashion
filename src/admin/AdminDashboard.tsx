@@ -4,11 +4,6 @@ import { VictoryPie, VictoryLabel, VictoryTheme } from "victory";
 
 const apiUrl = import.meta.env.VITE_API_URL
 
-type graficoMarcaType = {
-  marca: string
-  num: number
-}
-
 type graficoClienteType = {
   cidade: string
   num: number
@@ -21,7 +16,6 @@ type geralDadosType = {
 }
 
 export default function AdminDashboard() {
-  const [produtosMarca, setProdutosMarca] = useState<graficoProdutosType[]>([])
   const [clientesCidade, setClientesCidade] = useState<graficoClienteType[]>([])
   const [dados, setDados] = useState<geralDadosType>({} as geralDadosType)
 
@@ -33,13 +27,6 @@ export default function AdminDashboard() {
     }
     getDadosGerais()
 
-    async function getDadosGraficoMarca() {
-      const response = await fetch(`${apiUrl}/dashboard/produtosMarca`)
-      const dados = await response.json()
-      setProdutosMarca(dados)
-    }
-    getDadosGraficoMarca()
-
     async function getDadosGraficoCliente() {
       const response = await fetch(`${apiUrl}/dashboard/clientesCidade`)
       const dados = await response.json()
@@ -49,11 +36,7 @@ export default function AdminDashboard() {
 
   }, [])
 
-  const listaProdutosMarca = produtosMarca.map(item => (
-    { x: item.marca, y: item.num }
-  ))
-
-  const listaClientesCidade = clientesCidade.map(item => (
+    const listaClientesCidade = clientesCidade.map(item => (
     { x: item.cidade, y: item.num }
   ))
 
@@ -81,23 +64,6 @@ export default function AdminDashboard() {
 
       <div className="div-graficos">
         <svg viewBox="30 55 400 400">
-          <VictoryPie
-            standalone={false}
-            width={400}
-            height={400}
-            data={listaProdutosMarca}
-            innerRadius={50}
-            labelRadius={80}
-            theme={VictoryTheme.clean}
-            style={{
-              labels: {
-                fontSize: 10,
-                fill: "#fff",
-                fontFamily: "Arial",
-                fontWeight: "bold"
-              }
-            }}
-          />
           <VictoryLabel
             textAnchor="middle"
             style={{

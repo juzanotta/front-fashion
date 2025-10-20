@@ -5,13 +5,30 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 import App from './App.tsx'
 import Layout from './Layout.tsx'
-import Inclusao from './Inclusao.tsx'
 import Listagem from './Listagem.tsx'
 import Favoritos from './Favoritos.tsx'
 import Login from './Login.tsx'
 
+import Inclusao from './admin/Inclusao.tsx'
+import AdminLayout from './admin/AdminLayout.tsx';
+import AdminLogin from './admin/AdminLogin.tsx';            
+import AdminDashboard from './admin/AdminDashboard.tsx';
+import AdminVendas from './admin/AdminVendas.tsx'; 
+
 
 const rotas = createBrowserRouter([
+    {
+    path: "/admin/login",
+    element: <AdminLogin />,   // rota do form de login sem o Layout da Área Administrativa
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,  // layout principal do admin com menus e outlet
+    children: [
+      { index: true, element: <AdminDashboard /> },
+      { path: "vendas", element: <AdminVendas /> },  // ...
+    ],
+  },
   {
     path: "/",
     element: <Layout />,

@@ -1,21 +1,29 @@
 import { useEffect, useState } from "react"
-
 import type { VendaType } from "../utils/VendaType"
 import ItemVenda from "./components/ItemVenda"
+import { useAdminStore } from "./context/AdminContext"
 
 const apiUrl = import.meta.env.VITE_API_URL
 
 function ControleVendas() {
   const [vendas, setVendas] = useState<VendaType[]>([])
+  const { admin } = useAdminStore()
 
   useEffect(() => {
+    if (!admin.token) return
+
     async function getVendas() {
-      const response = await fetch(`${apiUrl}/vendas`)
+      const response = await fetch(`${apiUrl}/vendas`, {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer${admin.token}`
+        }
+      })
       const dados = await response.json()
       setVendas(dados)
     }
     getVendas()
-  }, [])
+  }, [admin.token])
 
   const listaVendas = vendas.map(venda => (
     <ItemVenda key={venda.id} venda={venda} vendas={vendas} setVendas={setVendas} />

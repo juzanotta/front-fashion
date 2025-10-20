@@ -1,5 +1,4 @@
 import { TiDeleteOutline } from "react-icons/ti"
-import { FaRegStar } from "react-icons/fa"
 
 import type { ProdutoType } from "../../utils/ProdutoType"
 import { useAdminStore } from "../context/AdminContext"
@@ -45,26 +44,12 @@ export default function ItemProduto({ produto, produtos, setProdutos }: listaPro
   return (
     <tr key={produto.id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
       <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-        <img src={produto.foto} alt={`Foto do ${produto.modelo}`}
+        <img src={produto.foto} alt={`Foto de ${produto.tipo}`}
           style={{ width: 200 }} />
       </th>
-      <td className={`px-6 py-4 ${produto.destaque ? "font-extrabold" : ""}`}>
-        {produto.modelo}
-      </td>
-      <td className={`px-6 py-4 ${produto.destaque ? "font-extrabold" : ""}`}>
-        {produto.marca.nome}
-      </td>
-      <td className={`px-6 py-4 ${produto.destaque ? "font-extrabold" : ""}`}>
-        {produto.ano}
-      </td>
-      <td className={`px-6 py-4 ${produto.destaque ? "font-extrabold" : ""}`}>
-        {Number(produto.preco).toLocaleString("pt-br", { minimumFractionDigits: 2 })}
-      </td>
       <td className="px-6 py-4">
         <TiDeleteOutline className="text-3xl text-red-600 inline-block cursor-pointer" title="Excluir"
           onClick={excluirProduto} />&nbsp;
-        <FaRegStar className="text-3xl text-yellow-600 inline-block cursor-pointer" title="Destacar"
-          onClick={alterarDestaque} />
       </td>
     </tr>
   )

@@ -34,7 +34,7 @@ export function MenuLateral() {
               <span className="h-5 text-gray-600 text-2xl">
                 <FaCarSide />
               </span>
-              <span className="ms-2 mt-1">Cadastro de Veículos</span>
+              <span className="ms-2 mt-1">Cadastro de Produtos</span>
             </Link>
           </li>
           <li>

@@ -5,7 +5,6 @@ import { useAdminStore } from "./context/AdminContext"
 const apiUrl = import.meta.env.VITE_API_URL
 
 type Inputs = {
-    id?: number
     cor: string
     marca?: string
     material?: string
@@ -28,16 +27,14 @@ export default function Inclusao() {
 
     async function incluirProduto(data: Inputs) {
 
-        type NovoProdutoPayload = Omit<Inputs, 'id'>
-
-        const novoProduto: NovoProdutoPayload = {
+        const novoProduto: Inputs = {
             cor: data.cor,
             marca: data.marca,
             material: data.material,
             valor: Number(data.valor),
             foto: data.foto,
-            tamanho: data.tamanho.toUpperCase(),
-            tipo: data.tipo.toUpperCase(),
+            tamanho: data.tamanho,
+            tipo: data.tipo,
             adminId: admin.id
         }
 
@@ -56,8 +53,6 @@ export default function Inclusao() {
             toast.success("Ok! Produto cadastrado com sucesso")
             reset()
         } else {
-            const erro = await response.json()
-            console.error(erro)
             toast.error("Erro no cadastro do Produto...")
         }
     }
@@ -127,8 +122,8 @@ export default function Inclusao() {
                             <option value="P" className="bg-[#D7A278] font-medium">P</option>
                             <option value="M" className="bg-[#D7A278] font-medium">M</option>
                             <option value="G" className="bg-[#D7A278] font-medium">G</option>
-                            <option value="G" className="bg-[#D7A278] font-medium">GG</option>
-                            <option value="G1" className="bg-[#D7A278] font-medium">XG</option>
+                            <option value="GG" className="bg-[#D7A278] font-medium">GG</option>
+                            <option value="G1" className="bg-[#D7A278] font-medium">G1</option>
                         </select>
                         <label htmlFor="tamanho" className="peer-focus:font-medium absolute text-sm text-[#C33941] dark:text-[#C33941] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-[#D7A278] peer-focus:dark:text-[#C33941] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tamanho</label>
                     </div>

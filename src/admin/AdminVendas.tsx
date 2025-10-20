@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import type { VendaType } from "../utils/VendaType"
 import ItemVenda from "./components/ItemVenda"
 import { useAdminStore } from "./context/AdminContext"
+import { toast } from "sonner"
 
 const apiUrl = import.meta.env.VITE_API_URL
 
@@ -13,14 +14,32 @@ function ControleVendas() {
     if (!admin.token) return
 
     async function getVendas() {
-      const response = await fetch(`${apiUrl}/vendas`, {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer${admin.token}`
+      try {
+        const response = await fetch(`${apiUrl}/vendas`, {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer${admin.token}`
+          }
+        })
+        if (!response.ok) {
+          const erro = await response.json()
+          console.error("Erro ao buscar vendas:", erro)
+          toast.error("Não foi possível carregar as vendas.")
+          return
         }
-      })
-      const dados = await response.json()
-      setVendas(dados)
+        const dados = await response.json()
+
+        if (Array.isArray(dados)) {
+          setVendas(dados)
+        } else {
+          console.error("A API não retornou um array:", dados)
+          toast.error("Resposta inesperada do servidor.")
+        }
+
+      } catch (error) {
+        console.error("Erro de conexão:", error)
+        toast.error("Erro de rede ao buscar vendas.")
+      }
     }
     getVendas()
   }, [admin.token])

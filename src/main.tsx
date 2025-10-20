@@ -8,25 +8,27 @@ import Layout from './Layout.tsx'
 import Listagem from './Listagem.tsx'
 import Favoritos from './Favoritos.tsx'
 import Login from './Login.tsx'
+import CadCliente from './CadCliente.tsx'
 
-import Inclusao from './admin/Inclusao.tsx'
 import AdminLayout from './admin/AdminLayout.tsx';
 import AdminLogin from './admin/AdminLogin.tsx';            
 import AdminDashboard from './admin/AdminDashboard.tsx';
+import Inclusao from './admin/Inclusao.tsx'
 import AdminVendas from './admin/AdminVendas.tsx'; 
 
 
 const rotas = createBrowserRouter([
     {
     path: "/admin/login",
-    element: <AdminLogin />,   // rota do form de login sem o Layout da Área Administrativa
+    element: <AdminLogin />,
   },
   {
     path: "/admin",
-    element: <AdminLayout />,  // layout principal do admin com menus e outlet
+    element: <AdminLayout />,
     children: [
       { index: true, element: <AdminDashboard /> },
       { path: "vendas", element: <AdminVendas /> },  // ...
+      { path: "produtos", element: <Inclusao /> }
     ],
   },
   {
@@ -34,11 +36,11 @@ const rotas = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <App /> },
-      { path: "inclusao", element: <Inclusao /> },
       { path: "listagem", element: <Listagem /> },
       { path: "produtos", element: <Listagem /> }, 
       { path: "pesquisa", element: <Listagem /> },
       { path: "favoritos", element: <Favoritos /> },
+      { path: 'cadCliente', element: <CadCliente /> },
       { path: "login", element: <Login /> },
     ],
   },

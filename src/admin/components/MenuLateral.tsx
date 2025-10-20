@@ -1,8 +1,8 @@
 import { useAdminStore } from "../context/AdminContext"
 import { IoExitOutline } from "react-icons/io5"
 import { BiSolidDashboard } from "react-icons/bi"
-import { FaCarSide, FaUsers } from "react-icons/fa6"
-import { BsCashCoin } from "react-icons/bs"
+import { FaUsers } from "react-icons/fa6"
+import { AiTwotoneSkin, AiTwotoneShopping } from "react-icons/ai";
 
 import { Link, useNavigate } from "react-router-dom"
 
@@ -32,9 +32,9 @@ export function MenuLateral() {
           <li>
             <Link to="/admin/produtos" className="flex items-center p-2">
               <span className="h-5 text-gray-600 text-2xl">
-                <FaCarSide />
+                <AiTwotoneSkin />
               </span>
-              <span className="ms-2 mt-1">Cadastro de Produtos</span>
+              <span className="ms-2 mt-1">Incluir Produto</span>
             </Link>
           </li>
           <li>
@@ -48,7 +48,7 @@ export function MenuLateral() {
           <li>
           <Link to="/admin/vendas" className="flex items-center p-2 cursor-pointer">
               <span className="h-5 text-gray-600 text-2xl">
-                <BsCashCoin />
+                <AiTwotoneShopping />
               </span>
               <span className="ms-2 mt-1">Controle de Vendas</span>
             </Link>

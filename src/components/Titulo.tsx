@@ -51,7 +51,7 @@ export default function Titulo() {
                         </div>
                         <ul
                             tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-30 p-2 shadow font-sans">
+                            className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-30 p-2 shadow font-sans">
                             <li><Link to="/login">Login</Link></li>
                             <li><Link onClick={clienteSair} to="/login">Logout</Link></li>
                         </ul>

@@ -31,7 +31,7 @@ export default function App() {
       try {
         const response = await fetch(`${apiUrl}/produtos`);
         const dados = await response.json();
-        setProdutos(dados.slice(-6));
+        setProdutos(dados.slice(0, 8));
       } catch (error) {
         console.error("Erro ao buscar produtos:", error);
       }
@@ -69,7 +69,7 @@ export default function App() {
 
   return (
     <>
-    <Titulo />  
+      <Titulo />
       <section className="bg-[#C33941] h-140 px-50 pt-15 flex flex-col justify-center items-center">
         <img src="/avenida.png" alt="Avenida" className="w-50" />
         <img src="/fashion.png" alt="Fashion" className="w-150" />
@@ -87,7 +87,7 @@ export default function App() {
 
           <button
             onClick={scrollLeft}
-            className="flex-shrink-0 p-2 rounded-full bg-none cursor-pointer hover:bg-white/80 transition-all duration-300"
+            className="p-2 rounded-full bg-none cursor-pointer hover:bg-white/80 transition-all duration-300"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#C33941" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -116,7 +116,7 @@ export default function App() {
 
           <button
             onClick={scrollRight}
-            className="flex-shrink-0 p-2 rounded-full bg-none cursor-pointer hover:bg-white/80 transition-all duration-300"
+            className="p-2 rounded-full bg-none cursor-pointer hover:bg-white/80 transition-all duration-300"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#C33941" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />

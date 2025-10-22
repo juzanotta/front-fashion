@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { ProdutoType } from "../utils/ProdutoType";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 import { useClienteStore } from "../context/ClienteContext";
 
 export function CardProduto({ data }: { data: ProdutoType }) {
@@ -16,6 +16,14 @@ export function CardProduto({ data }: { data: ProdutoType }) {
 
     const toggleFavorito = () => {
         const novoStatus = !favoritado;
+
+        if (!cliente.token) {
+            toast.error("Você precisa estar logado para favoritar!");
+            setTimeout(() => {
+                navigate("/login")
+            }, 2000)
+            return;
+        }
 
         setFavoritado(novoStatus);
 
@@ -32,7 +40,9 @@ export function CardProduto({ data }: { data: ProdutoType }) {
     function handleComprar() {
         if (!cliente.token) {
             toast.error("Você precisa estar logado para comprar!");
-            navigate("/login");
+            setTimeout(() => {
+                navigate("/login")
+            }, 2000)
             return;
         }
 
@@ -98,6 +108,7 @@ export function CardProduto({ data }: { data: ProdutoType }) {
                     </button>
                 </div>
             </div>
+            <Toaster richColors position="top-right" />
         </div>
     )
 }

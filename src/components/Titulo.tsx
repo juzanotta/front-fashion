@@ -1,18 +1,12 @@
-import type { ProdutoType } from "../utils/ProdutoType";
 import { Link } from "react-router-dom";
 
-type TituloProps = {
-    setProdutos: React.Dispatch<React.SetStateAction<ProdutoType[]>>;
-};
 
-export default function Titulo({ }: TituloProps) {
+export default function Titulo() {
     return (
         <>
             <div className="navbar shadow-sm px-30 bg-[#F1EEE7] fixed top-0 left-0 w-full h-16 z-50">
 
                 <div className="navbar-start">
-                    {/* <a href="#categorias" className="font-sans font-normal text-sm lowercase tracking-wider px-3 text-[#C33941] hover:underline">Categorias</a>
-                    <Link to="/inclusao" className="font-sans font-normal text-sm lowercase tracking-wider px-3 text-[#C33941] hover:underline">Incluir</Link> */}
                     <Link to="/listagem" className="font-sans font-normal text-sm lowercase tracking-wider px-3 text-[#C33941] hover:underline">produtos</Link>
                 </div>
 
@@ -20,7 +14,6 @@ export default function Titulo({ }: TituloProps) {
                     <Link to="/" className="text-2xl uppercase font-medium tracking-wider text-[#C33941] font-serif hover:font-bold" >Avenida</Link>
                 </div>
                 <div className="flex navbar-end gap-2">
-                    {/* <InputPesquisa setProdutos={setProdutos} />  */}
 
                     <div className="dropdown dropdown-end">
                         <Link to="/favoritos" className="btn btn-circle bg-[#F1EEE7] border-[#F1EEE7] text-[#C33941] hover:bg-[#C33941] hover:text-[#F1EEE7] mb-1 ml-4">

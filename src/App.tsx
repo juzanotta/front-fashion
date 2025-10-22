@@ -1,7 +1,6 @@
 import { CardProduto } from "./components/CardProduto";
 import type { ProdutoType } from "./utils/ProdutoType";
 import { useEffect, useState, useRef } from "react";
-import Titulo from "./components/Titulo";
 import { useNavigate } from "react-router-dom";
 import { useClienteStore } from "./context/ClienteContext";
 
@@ -69,7 +68,6 @@ export default function App() {
 
   return (
     <>
-      <Titulo setProdutos={setProdutos} />
 
       <section className="bg-[#C33941] h-140 px-50 pt-15 flex flex-col justify-center items-center">
         <img src="/avenida.png" alt="Avenida" className="w-50" />

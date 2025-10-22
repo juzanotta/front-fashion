@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, Toaster } from "sonner";
+import Titulo from "./components/Titulo";
 
 type Inputs = {
     nome: string;
@@ -50,6 +51,7 @@ export default function CadCliente() {
 
     return (
         <>
+        <Titulo />
             <section className="bg-[#F1EEE7] dark:bg-gray-900 py-20 px-4">
                 <div className="w-full rounded-lg sm:max-w-md dark:bg-gray-800 dark:border dark:border-gray-700 mx-auto">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

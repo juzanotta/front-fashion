@@ -49,7 +49,7 @@ export default function Listagem() {
 
     return (
         <>
-        <Titulo setProdutos={setProdutos} />
+        <Titulo  />
         <div className="bg-[#F1EEE7] h-full px-33 py-23 ">
             <div className="flex justify-between pb-9 items-center">
                 <h1 className="font-serif text-[#C33941] text-5xl w-30">produtos</h1>

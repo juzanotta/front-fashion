@@ -126,7 +126,7 @@ export default function PaginaCompra() {
                         </div>
                     </div>
                     <div className="mt-3 p-4 border border-[#C33941] rounded-lg bg-white">
-                        <h3 className="font-bold text-lg text-[#C33941] mb-1">Entregar para:</h3>
+                        <h3 className="font-bold text-lg text-[#C33941] mb-1">entregar para:</h3>
                         <p className="text-gray-700">{cliente.nome}</p>
                         <p className="text-gray-700">{cliente.email}</p>
                         <p className="text-gray-700">{cliente.endereco}, {cliente.cidade}</p>
@@ -138,7 +138,7 @@ export default function PaginaCompra() {
                             <h3 className="font-serif text-[#C33941] text-4xl pb-6">pagamento</h3>
                             <div className="form-control w-full">
                                 <label className="label">
-                                    <span className="label-text text-gray-700 mb-3">Escolha o método de pagamento:</span>
+                                    <span className="label-text text-gray-700 mb-3">escolha o método de pagamento:</span>
                                 </label>
                                 <select
                                     className="select select-bordered"
@@ -155,15 +155,15 @@ export default function PaginaCompra() {
                             <div className="divider mb-5 mt-42"></div>
                             <div className="space-y-2 text-lg">
                                 <div className="flex justify-between">
-                                    <span>Subtotal:</span>
+                                    <span>subtotal:</span>
                                     <span>R$ {Number(produto.valor).toLocaleString("pt-br", { minimumFractionDigits: 2 })}</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span>Frete:</span>
-                                    <span>Grátis</span>
+                                    <span>frete:</span>
+                                    <span>grátis</span>
                                 </div>
                                 <div className="flex justify-between font-bold text-2xl text-[#C33941]">
-                                    <span>Total:</span>
+                                    <span>total:</span>
                                     <span>R$ {Number(produto.valor).toLocaleString("pt-br", { minimumFractionDigits: 2 })}</span>
                                 </div>
                             </div>
@@ -171,23 +171,23 @@ export default function PaginaCompra() {
                                 type="submit"
                                 className="btn btn-lg bg-[#C33941] text-white hover:bg-[#a52e35] w-full mt-6"
                             >
-                                Finalizar compra
+                                finalizar compra
                             </button>
                         </>
                     ) : (
                         <div className="flex flex-col items-center">
-                            <h3 className="font-serif text-[#C33941] text-3xl pb-6">Confirme o Pagamento</h3>
+                            <h3 className="font-serif text-[#C33941] text-3xl pb-6">confirme o Pagamento</h3>
                             <p className="text-center mb-4 text-gray-600">
-                                Escaneie o código abaixo com a câmera do seu celular ou app de pagamento para finalizar a compra.
+                                escaneie o código abaixo com a câmera do seu celular ou app de pagamento para finalizar a compra.
                             </p>
                             <QRCodeCanvas value={urlQrCode} size={256} />
-                            <p className="mt-4 text-sm text-gray-500">Aguardando confirmação...</p>
+                            <p className="mt-4 text-sm text-gray-500">aguardando confirmação...</p>
                             <button
                                 type="button"
                                 onClick={handleCancelarCompra}
                                 className="btn btn-lg bg-[#C33941] text-white hover:bg-[#a52e35] w-full mt-8"
                             >
-                                Cancelar
+                                cancelar
                             </button>
                         </div>
                     )}

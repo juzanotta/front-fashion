@@ -8,7 +8,7 @@ type StatusCompra = 'loading' | 'success' | 'error';
 export default function PaginaCompraSucesso() {
     const { id: tentativaCompraId } = useParams();
     const [status, setStatus] = useState<StatusCompra>('loading');
-    const [erroMessage, setErroMessage] = useState('Ocorreu um erro inesperado.');
+    const [erroMessage, setErroMessage] = useState('ocorreu um erro inesperado.');
 
     useEffect(() => {
         async function confirmarCompra() {
@@ -20,7 +20,7 @@ export default function PaginaCompraSucesso() {
 
             const dadosSalvos = localStorage.getItem(`compra-${tentativaCompraId}`);
             if (!dadosSalvos) {
-                setErroMessage("Dados da compra não encontrados ou expirados. Tente novamente.");
+                setErroMessage("dados da compra não encontrados ou expirados. tente novamente.");
                 setStatus('error');
                 return;
             }
@@ -50,16 +50,16 @@ export default function PaginaCompraSucesso() {
                     const erro = await response.json();
                     console.error("API Error on confirmation:", erro);
                     if (erro.message?.includes('vendido') || erro.code === 'P2025') {
-                        setErroMessage("Que pena! Este item acabou de ser vendido por outra pessoa.");
+                        setErroMessage("que pena! Este item acabou de ser vendido por outra pessoa.");
                     } else if (erro.erro?.issues) {
-                        setErroMessage(`Erro de validação: ${erro.erro.issues[0].message}`);
+                        setErroMessage(`erro de validação: ${erro.erro.issues[0].message}`);
                     } else {
-                        setErroMessage("Não foi possível processar o seu pagamento. Tente novamente.");
+                        setErroMessage("não foi possível processar o seu pagamento. Tente novamente.");
                     }
                     setStatus('error');
                 }
             } catch (error) {
-                setErroMessage("Falha na comunicação com o servidor de pagamento.");
+                setErroMessage("falha na comunicação com o servidor de pagamento.");
                 setStatus('error');
             } finally {
                 localStorage.removeItem(`compra-${tentativaCompraId}`);
@@ -78,7 +78,7 @@ export default function PaginaCompraSucesso() {
         return (
             <div className="flex flex-col justify-center items-center h-screen text-center bg-[#F1EEE7]">
                 <span className="loading loading-spinner loading-lg text-[#C33941]"></span>
-                <p className="mt-4 text-xl text-[#C33941]">A processar o seu pagamento...</p>
+                <p className="mt-4 text-xl text-[#C33941]">a processar o seu pagamento...</p>
             </div>
         );
     }
@@ -89,10 +89,10 @@ export default function PaginaCompraSucesso() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <h1 className="mt-4 text-3xl font-bold text-gray-800">Falha na Compra</h1>
-                <p className="mt-2 text-lg text-gray-600">{erroMessage}</p>
+                <h1 className="font-serif text-[#C33941] text-4xl p-2">falha na compra</h1>
+                <p className="mt-2 text-lg text-gray-600 w-90">{erroMessage}</p>
                 <Link to="/" className="btn bg-[#C33941] text-white mt-8 hover:bg-[#a52e35]">
-                    Voltar para a Loja
+                    voltar para a Loja
                 </Link>
             </div>
         );
@@ -103,10 +103,10 @@ export default function PaginaCompraSucesso() {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <h1 className="mt-4 text-3xl font-bold text-gray-800">Compra Finalizada com Sucesso!</h1>
-            <p className="mt-2 text-lg text-gray-600">Obrigado por comprar connosco! Um e-mail de confirmação foi enviado.</p>
+            <h1 className="font-serif text-[#C33941] text-4xl p-2">compra finalizada com sucesso!</h1>
+            <p className="mt-2 text-lg text-gray-600 w-90">obrigado por comprar connosco! um e-mail de confirmação foi enviado.</p>
             <Link to="/" className="btn bg-[#C33941] text-white mt-8 hover:bg-[#a52e35]">
-                Continuar a Comprar
+                continuar comprando
             </Link>
         </div>
     );

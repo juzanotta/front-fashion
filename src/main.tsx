@@ -10,11 +10,12 @@ import Favoritos from './Favoritos.tsx'
 import Login from './Login.tsx'
 import CadCliente from './CadCliente.tsx'
 import PaginaCompra from './PaginaCompra.tsx'
+import PaginaSucessoCompra from './PaginaSucessoCompra.tsx';
 
 import AdminLayout from './admin/AdminLayout.tsx';
 import AdminLogin from './admin/AdminLogin.tsx';            
 import AdminDashboard from './admin/AdminDashboard.tsx';
-import Inclusao from './admin/Inclusao.tsx'
+import Inclusao from './admin/Inclusao.tsx';
 import AdminVendas from './admin/AdminVendas.tsx'; 
 
 
@@ -43,7 +44,8 @@ const rotas = createBrowserRouter([
       { path: "favoritos", element: <Favoritos /> },
       { path: 'cadCliente', element: <CadCliente /> },
       { path: "login", element: <Login /> },
-      { path: "comprar/:id", element: <PaginaCompra /> }
+      { path: "comprar/:id", element: <PaginaCompra /> },
+      { path: "compra-sucesso/:id", element: <PaginaSucessoCompra /> }
     ],
   },
 ]);

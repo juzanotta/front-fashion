@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { ProdutoType } from "../utils/ProdutoType";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -5,8 +6,21 @@ import { useClienteStore } from "../context/ClienteContext";
 
 export function CardProduto({ data }: { data: ProdutoType }) {
     const navigate = useNavigate();
-
     const { cliente } = useClienteStore();
+    const storageKey = `favorito-${data.id}`;
+
+    const [favoritado, setFavoritado] = useState(() => {
+        const storedValue = localStorage.getItem(storageKey);
+        return storedValue ? JSON.parse(storedValue) : false;
+    });
+
+    const toggleFavorito = () => {
+        const novoStatus = !favoritado;
+
+        setFavoritado(novoStatus);
+
+        localStorage.setItem(storageKey, JSON.stringify(novoStatus));
+    };
 
     let tipoExibicao = data.tipo.toLowerCase();
     if (data.tipo === "CALCA") {
@@ -25,10 +39,6 @@ export function CardProduto({ data }: { data: ProdutoType }) {
         navigate(`/comprar/${data.id}`);
     }
 
-    function Favoritar() {
-        toast.info("Funcionalidade de Favoritar ainda não implementada.");
-    }
-
     return (
         <div className="card bg-[#F1EEE7] border border-[#C33941] w-75 shadow-lg shadow-[#C33941]/30">
             <figure className="px-5 pt-5">
@@ -40,13 +50,9 @@ export function CardProduto({ data }: { data: ProdutoType }) {
             </figure>
 
             <div className="card-body p-5">
-                <h2 className="card-title font-sans font-bold text-xl text-[#C33941]">
-                    {tipoExibicao} {data.cor}
-                </h2>
+                <h2 className="card-title font-sans font-bold text-xl text-[#C33941]">{tipoExibicao} {data.cor}</h2>
 
-                <p className="font-sans text-[#C33941] text-lg">
-                    {data.tamanho} | R$ {Number(data.valor).toLocaleString("pt-br", { minimumFractionDigits: 2 })}
-                </p>
+                <p className="font-sans text-[#C33941] text-lg">{data.tamanho} | R${Number(data.valor).toLocaleString("pt-br", { minimumFractionDigits: 2 })}</p>
 
                 <div className="mt-2">
                     {data.marca && (
@@ -60,7 +66,6 @@ export function CardProduto({ data }: { data: ProdutoType }) {
                         </div>
                     )}
                 </div>
-
                 <div className="card-actions justify-between items-center mt-4">
                     <button
                         className="btn bg-[#C33941] text-[#F1EEE7] hover:bg-[#a52e35] w-30 border-[#C33941]"
@@ -74,11 +79,21 @@ export function CardProduto({ data }: { data: ProdutoType }) {
 
                     <button
                         className="btn btn-circle bg-transparent border-[#C33941] text-[#C33941] hover:bg-[#C33941] hover:text-[#F1EEE7]"
-                        onClick={Favoritar}
-                        title="Adicionar aos favoritos"
+                        onClick={toggleFavorito}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill={favoritado ? "currentColor" : "none"}
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="size-6"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+                            />
                         </svg>
                     </button>
                 </div>

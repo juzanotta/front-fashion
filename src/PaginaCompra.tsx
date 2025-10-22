@@ -142,12 +142,12 @@ export default function PaginaCompra() {
                                         <span className="label-text text-gray-700 mb-3">escolha o método de pagamento:</span>
                                     </label>
                                     <select
-                                        className="select select-all bg-[#F1EEE7]"
+                                        className="select select-auto"
                                         value={metodoPagamento}
                                         onChange={(e) => setMetodoPagamento(e.target.value)}
                                         required
                                     >
-                                        <option value="PIX">pix</option>
+                                        <option value="PIX">PIX</option>
                                         <option value="CREDITO">cartão de crédito</option>
                                         <option value="DEBITO">cartão de débito</option>
                                     </select>
@@ -181,7 +181,7 @@ export default function PaginaCompra() {
                                 <p className="text-center mb-4 text-gray-600">
                                     escaneie o código abaixo com a câmera do seu celular ou app de pagamento para finalizar a compra.
                                 </p>
-                                <QRCodeCanvas value={urlQrCode} size={256} />
+                                <QRCodeCanvas value={urlQrCode} size={256} className='p-2 rounded-2xl border-2 border-[#C33941] bg-white'/>
                                 <p className="mt-4 text-sm text-gray-500">aguardando confirmação...</p>
                                 <button
                                     type="button"

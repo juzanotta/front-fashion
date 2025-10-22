@@ -49,13 +49,13 @@ export default function Listagem() {
 
     return (
         <>
-        <Titulo setProdutos={setProdutos} />
+        <Titulo />
         <div className="bg-[#F1EEE7] h-full px-33 py-23 ">
             <div className="flex justify-between pb-9 items-center">
                 <h1 className="font-serif text-[#C33941] text-5xl w-30">produtos</h1>
                 <InputPesquisa setProdutos={setProdutos} />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-11 place-items-center mt-8">
                 {produtos.length > 0 ? (
                     produtos.map(produto => (
                         <CardProduto data={produto} key={produto.id} />

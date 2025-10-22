@@ -1,108 +1,199 @@
-import { useForm } from "react-hook-form"
-import { Link, useNavigate } from "react-router-dom"
-import { toast, Toaster } from "sonner"
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { toast, Toaster } from "sonner";
+import Titulo from "./components/Titulo";
 
 type Inputs = {
-    nome: string
-    email: string
-    endereco: string
-    telefone: string
-    cidade: string
-    senha: string
-    senha2: string
-}
+    nome: string;
+    email: string;
+    endereco: string;
+    telefone: string;
+    cidade: string;
+    senha: string;
+    senha2: string;
+};
 
-const apiUrl = import.meta.env.VITE_API_URL
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function CadCliente() {
-    const { register, handleSubmit } = useForm<Inputs>()
-    const navigate = useNavigate()
+    const { register, handleSubmit } = useForm<Inputs>();
+    const navigate = useNavigate();
 
     async function cadastraCliente(data: Inputs) {
-
         if (data.senha != data.senha2) {
-            toast.error("Erro... Senha e Confirme Senha precisam ser iguais")
-            return
+            toast.error("Erro... Senha e Confirme Senha precisam ser iguais");
+            return;
         }
 
-        const response = await
-            fetch(`${apiUrl}/clientes`, {
-                headers: { "Content-Type": "application/json" },
-                method: "POST",
-                body: JSON.stringify({
-                    nome: data.nome,
-                    cidade: data.cidade,
-                    endereco: data.endereco,
-                    telefone: data.telefone,
-                    email: data.email,
-                    senha: data.senha
-                })
-            })
+        const response = await fetch(`${apiUrl}/clientes`, {
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+            body: JSON.stringify({
+                nome: data.nome,
+                cidade: data.cidade,
+                endereco: data.endereco,
+                telefone: data.telefone,
+                email: data.email,
+                senha: data.senha,
+            }),
+        });
+
         if (response.status === 201) {
-            toast.success("Usuário cadastrado com sucesso!")
+            toast.success("Usuário cadastrado com sucesso!");
 
             setTimeout(() => {
-                navigate("/login")
-            }, 1500)
+                navigate("/login");
+            }, 1500);
         } else {
-            toast.error("Erro... Não foi possível realizar o cadastro")
+            toast.error("Erro... Não foi possível realizar o cadastro");
         }
     }
 
     return (
-        <section className="bg-gray-50 dark:bg-gray-900">
-            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <>
+        <Titulo />
+            <section className="bg-[#F1EEE7] dark:bg-gray-900 py-20 px-4">
+                <div className="w-full rounded-lg sm:max-w-md dark:bg-gray-800 dark:border dark:border-gray-700 mx-auto">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                            Cadastro de Cliente
+                        <h1 className="font-serif text-[#C33941] text-5xl">
+                            cadastre-se
                         </h1>
-                        <form className="space-y-4 md:space-y-6"
-                            onSubmit={handleSubmit(cadastraCliente)}>
+                        <form
+                            className="space-y-4 md:space-y-6"
+                            onSubmit={handleSubmit(cadastraCliente)}
+                        >
                             <div>
-                                <label htmlFor="nome" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome:</label>
-                                <input type="text" id="nome" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Seu nome completo" required
-                                    {...register("nome")} />
+                                <label
+                                    htmlFor="nome"
+                                    className="block mb-2 text-sm font-medium text-[#C33941] dark:text-white pl-2"
+                                >
+                                    nome
+                                </label>
+                                <input
+                                    type="text"
+                                    id="nome"
+                                    className="bg-[#F1EEE7] border border-[#C33941] text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="seu nome completo"
+                                    required
+                                    {...register("nome")}
+                                />
                             </div>
                             <div>
-                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-mail:</label>
-                                <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="nome@gmail.com" required
-                                    {...register("email")} />
+                                <label
+                                    htmlFor="email"
+                                    className="block mb-2 text-sm font-medium text-[#C33941] dark:text-white pl-2"
+                                >
+                                    e-mail
+                                </label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    className="bg-[#F1EEE7] border border-[#C33941] text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="nome@gmail.com"
+                                    required
+                                    {...register("email")}
+                                />
                             </div>
                             <div>
-                                <label htmlFor="telefone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefone:</label>
-                                <input type="text" id="telefone" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Sua telefone" required
-                                    {...register("telefone")} />
+                                <label
+                                    htmlFor="telefone"
+                                    className="block mb-2 text-sm font-medium text-[#C33941] dark:text-white pl-2"
+                                >
+                                    telefone
+                                </label>
+                                <input
+                                    type="text"
+                                    id="telefone"
+                                    className="bg-[#F1EEE7] border border-[#C33941] text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="seu telefone"
+                                    required
+                                    {...register("telefone")}
+                                />
                             </div>
                             <div>
-                                <label htmlFor="cidade" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cidade:</label>
-                                <input type="text" id="cidade" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Sua cidade" required
-                                    {...register("cidade")} />
+                                <label
+                                    htmlFor="cidade"
+                                    className="block mb-2 text-sm font-medium text-[#C33941] dark:text-white pl-2"
+                                >
+                                    cidade
+                                </label>
+                                <input
+                                    type="text"
+                                    id="cidade"
+                                    className="bg-[#F1EEE7] border border-[#C33941] text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="sua cidade"
+                                    required
+                                    {...register("cidade")}
+                                />
                             </div>
                             <div>
-                                <label htmlFor="endereco" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Endereco:</label>
-                                <input type="text" id="endereco" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Sua endereco" required
-                                    {...register("endereco")} />
+                                <label
+                                    htmlFor="endereco"
+                                    className="block mb-2 text-sm font-medium text-[#C33941] dark:text-white pl-2"
+                                >
+                                    endereço
+                                </label>
+                                <input
+                                    type="text"
+                                    id="endereco"
+                                    className="bg-[#F1EEE7] border border-[#C33941] text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="seu endereço"
+                                    required
+                                    {...register("endereco")}
+                                />
                             </div>
                             <div>
-                                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Senha de Acesso:</label>
-                                <input type="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required
-                                    {...register("senha")} />
+                                <label
+                                    htmlFor="password"
+                                    className="block mb-2 text-sm font-medium text-[#C33941] dark:text-white pl-2"
+                                >
+                                    senha
+                                </label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    placeholder="••••••••"
+                                    className="bg-[#F1EEE7] border border-[#C33941] text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    required
+                                    {...register("senha")}
+                                />
                             </div>
                             <div>
-                                <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirme a Senha:</label>
-                                <input type="password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required
-                                    {...register("senha2")} />
+                                <label
+                                    htmlFor="confirm-password"
+                                    className="block mb-2 text-sm font-medium text-[#C33941] dark:text-white pl-2"
+                                >
+                                    confirme a senha
+                                </label>
+                                <input
+                                    type="password"
+                                    id="confirm-password"
+                                    placeholder="••••••••"
+                                    className="bg-[#F1EEE7] border border-[#C33941] text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    required
+                                    {...register("senha2")}
+                                />
                             </div>
-                            <button type="submit" className="w-full text-white bg-amber-600 hover:bg-amber-700 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-amber-400 dark:hover:bg-amber-500 dark:focus:ring-amber-800">Criar sua Conta</button>
+                            <button
+                                type="submit"
+                                className="w-full text-[#F1EEE7] bg-[#C33941] hover:bg-[#F1EEE7] hover:text-[#C33941] border border-[#C33941] focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer"
+                            >
+                                crie sua conta!
+                            </button>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Já possui uma conta? <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Faça Login</Link>
+                                já tem uma conta?{" "}
+                                <Link
+                                    to="/login"
+                                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                                >
+                                    faça login!
+                                </Link>
                             </p>
                         </form>
                     </div>
                 </div>
-            </div>
+            </section>
             <Toaster richColors position="top-right" />
-        </section>
-    )
+        </>
+    );
 }

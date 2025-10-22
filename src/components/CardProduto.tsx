@@ -40,12 +40,12 @@ export function CardProduto({ data }: { data: ProdutoType }) {
     }
 
     return (
-        <div className="card bg-[#F1EEE7] border border-[#C33941] w-75 shadow-lg shadow-[#C33941]/30">
-            <figure className="px-5 pt-5">
+        <div className="card bg-[#F1EEE7] border border-[#C33941] w-75">
+            <figure className="px-3 pt-3">
                 <img
                     src={data.foto}
                     alt={tipoExibicao}
-                    className="rounded-xl w-full h-72 object-cover"
+                    className="rounded-lg w-full h-72 object-cover"
                 />
             </figure>
 
@@ -68,7 +68,7 @@ export function CardProduto({ data }: { data: ProdutoType }) {
                 </div>
                 <div className="card-actions justify-between items-center mt-4">
                     <button
-                        className="btn bg-[#C33941] text-[#F1EEE7] hover:bg-[#a52e35] w-30 border-[#C33941]"
+                        className="btn bg-[#C33941] text-[#F1EEE7] hover:bg-[#a52e35] w-30 border-[#C33941] rounded-lg"
                         onClick={handleComprar}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-5">

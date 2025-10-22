@@ -88,7 +88,7 @@ export default function Login() {
                                 entrar
                             </button>
                             <Link to="/cadCliente" className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Ainda não possui conta? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Cadastre-se</a>
+                                ainda não tem uma conta? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">cadastre-se!</a>
                             </Link>
                         </form>
                     </div>

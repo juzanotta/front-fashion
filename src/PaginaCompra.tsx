@@ -65,7 +65,7 @@ export default function PaginaCompra() {
             token: cliente.token
         };
         localStorage.setItem(`compra-${tentativaCompraId}`, JSON.stringify(dadosCompraTemporarios));
-
+        console.log(`Dados salvos no localStorage para a chave: compra-${tentativaCompraId}`); // <--- Adicione este log
         setMostrarQrCode(true);
     }
 
@@ -181,7 +181,7 @@ export default function PaginaCompra() {
                                 <p className="text-center mb-4 text-gray-600">
                                     escaneie o código abaixo com a câmera do seu celular ou app de pagamento para finalizar a compra.
                                 </p>
-                                <QRCodeCanvas value={urlQrCode} size={256} className='p-2 rounded-2xl border-2 border-[#C33941] bg-white'/>
+                                <QRCodeCanvas value={urlQrCode} size={256} className='p-2 rounded-2xl border-2 border-[#C33941] bg-white' />
                                 <p className="mt-4 text-sm text-gray-500">aguardando confirmação...</p>
                                 <button
                                     type="button"

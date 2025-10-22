@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Titulo from "./components/Titulo";
 import type { ProdutoType } from "./utils/ProdutoType";
-import { useSearchParams } from "react-router-dom"; 
 import { useClienteStore } from "./context/ClienteContext";
 import { InputPesquisa } from "./components/InputPesquisa";
 import { CardProduto } from "./components/CardProduto";

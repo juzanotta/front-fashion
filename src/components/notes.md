@@ -7,3 +7,21 @@
 <a href="#foto2" className="btn btn-ghost btn-circle text-[#C33941]">❯</a> 
 </div> 
 </div> 
+
+
+
+import type { ClienteType } from '../utils/ClienteType'
+import { create } from 'zustand'
+
+
+type ClienteStore = {
+    cliente: ClienteType
+    logaCliente: (clienteLogado: ClienteType) => void
+    deslogaCliente: () => void
+}
+
+export const useClienteStore = create<ClienteStore>((set) => ({
+    cliente: {} as ClienteType,
+    logaCliente: (clienteLogado: any) => set({cliente: clienteLogado}),
+    deslogaCliente: () => set({cliente: {} as ClienteType})
+}))

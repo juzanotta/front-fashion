@@ -49,29 +49,27 @@ function ControleVendas() {
   ))
 
   return (
-    <div className='m-4 mt-24'>
-      <h1 className="mb-4 text-2xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
-        Controle de Vendas
-      </h1>
+    <div className='bg-[#F1EEE7] min-h-screen pt-24 pl-10 font-sans'>
+      <h1 className="font-serif text-[#C33941] text-4xl pb-10">controle de vendas</h1>
 
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div className="relative overflow-x-auto  sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-medium text-[#C33941] font-normal bg-[#F1EEE7] dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Foto do Produto
+                foto do produto
               </th>
               <th scope="col" className="px-6 py-3">
-                Valor R$
+                valor R$
               </th>
               <th scope="col" className="px-6 py-3">
-                Cliente
+                cliente
               </th>
               <th scope="col" className="px-6 py-3">
-                Venda do Cliente
+                venda do cliente
               </th>
               <th scope="col" className="px-6 py-3">
-                Ações
+                ações
               </th>
             </tr>
           </thead>

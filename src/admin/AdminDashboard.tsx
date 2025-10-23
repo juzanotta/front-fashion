@@ -41,24 +41,24 @@ export default function AdminDashboard() {
   ))
 
   return (
-    <div className="container mt-24">
-      <h2 className="text-3xl mb-4 font-bold">Visão Geral do Sistema</h2>
+    <div className="container pt-24 pl-10">
+      <h2 className="font-serif text-[#C33941] text-4xl pb-10">visão geral do sistema</h2>
 
-      <div className="w-2/3 flex justify-between mx-auto mb-5">
-        <div className="border-blue-600 border rounded p-6 w-1/3 me-3">
-          <span className="bg-blue-100 text-blue-800 text-xl text-center font-bold mx-auto block px-2.5 py-5 rounded dark:bg-blue-900 dark:text-blue-300">
+      <div className="w-2/3 flex justify-between mx-auto mb-15 font-sans font-semibold">
+        <div className="border-[#C33941] border rounded p-6 w-1/3 me-3">
+          <span className="bg-[#C33941] text-[#F1EEE7] text-xl text-center mx-auto block px-2.5 py-5 rounded dark:bg-blue-900 dark:text-blue-300">
             {dados.clientes}</span>
-          <p className="font-bold mt-2 text-center">Nº Clientes</p>
+          <p className=" text-[#C33941] mt-2 text-center">nº clientes</p>
         </div>
-        <div className="border-red-600 border rounded p-6 w-1/3 me-3">
-          <span className="bg-red-100 text-red-800 text-xl text-center font-bold mx-auto block px-2.5 py-5 rounded dark:bg-red-900 dark:text-red-300">
+        <div className="border-[#E37036] border rounded p-6 w-1/3 me-3">
+          <span className="bg-[#E37036] text-[#F1EEE7] text-xl text-center mx-auto block px-2.5 py-5 rounded dark:bg-red-900 dark:text-red-300">
             {dados.produtos}</span>
-          <p className="font-bold mt-2 text-center">Nº Produtos</p>
+          <p className="text-[#E37036] mt-2 text-center">nº produtos</p>
         </div>
-        <div className="border-green-600 border rounded p-6 w-1/3">
-          <span className="bg-green-100 text-green-800 text-xl text-center font-bold mx-auto block px-2.5 py-5 rounded dark:bg-green-900 dark:text-green-300">
+        <div className="border-[#E35236] border rounded p-6 w-1/3">
+          <span className="bg-[#E35236] text-[#F1EEE7] text-xl text-center mx-auto block px-2.5 py-5 rounded dark:bg-green-900 dark:text-green-300">
             {dados.vendas}</span>
-          <p className="font-bold mt-2 text-center">Nº Vendas</p>
+          <p className="text-[#E35236] mt-2 text-center">nº vendas</p>
         </div>
       </div>
 
@@ -68,13 +68,13 @@ export default function AdminDashboard() {
             textAnchor="middle"
             style={{
               fontSize: 12,
-              fill: "#f00",
-              fontFamily: "Arial",
-              fontWeight: "bold"
+              fill: "#C33941",
+              fontFamily: "Work Sans",
+              fontWeight: "600"
             }}
             x={200}
             y={200}
-            text={["Veículos", "por Marca"]}
+            text={["produtos", "por marca"]}
           />
         </svg>
 
@@ -91,8 +91,8 @@ export default function AdminDashboard() {
               labels: {
                 fontSize: 10,
                 fill: "#fff",
-                fontFamily: "Arial",
-                fontWeight: "bold"
+                fontFamily: "Work Sans",
+                fontWeight: "600"
               }
             }}
           />
@@ -100,13 +100,13 @@ export default function AdminDashboard() {
             textAnchor="middle"
             style={{
               fontSize: 12,
-              fill: "#f00",
-              fontFamily: "Arial",
-              fontWeight: "bold"
+              fill: "#C33941",
+              fontFamily: "Work Sans",
+              fontWeight: "600"
             }}
             x={200}
             y={200}
-            text={["Clientes", "por Cidade"]}
+            text={["clientes", "por cidade"]}
           />
         </svg>
 

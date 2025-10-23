@@ -58,97 +58,98 @@ export default function Inclusao() {
     }
 
     return (
-        <div className="bg-[#F1EEE7] h-screen px-33 py-25  flex">
+        <div className="bg-[#F1EEE7] min-h-screen pt-24 pl-10  flex">
 
-            <h1 className="font-serif text-[#C33941] text-5xl w-30 ">novo produto</h1>
+            <h1 className="font-serif text-[#C33941] text-4xl  ">novo produto</h1>
+            <div className="flex flex-col items-center flex-grow pr-105 pt-5">
+                <div className=" rounded-lg  dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                    <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                        <form className="space-y-4 md:space-y-6"
+                            onSubmit={handleSubmit(incluirProduto)} >
+                            <div>
+                                <label htmlFor="tipo" className="block mb-2 text-sm font-normal text-[#C33941] dark:text-white pl-2">tipo da peça</label>
+                                <select
+                                    id="tipo"
+                                    defaultValue=""
+                                    required
+                                    className="bg-[#F1EEE7] border border-[#C33941] text-[#C33941] rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-100 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    {...register("tipo")}>
+                                    <option value="" disabled hidden></option>
+                                    <option value="CALCA" className="bg-[#F1EEE7] font-regular text-[#C33941]">calça</option>
+                                    <option value="BLUSA" className="bg-[#F1EEE7] font-regular text-[#C33941]">blusa</option>
+                                    <option value="ACESSORIO" className="bg-[#F1EEE7] font-regular text-[#C33941]">acessório</option>
+                                    <option value="SAIA" className="bg-[#F1EEE7] font-regular text-[#C33941]">saia</option>
+                                    <option value="VESTIDO" className="bg-[#F1EEE7] font-regular text-[#C33941]">vestido</option>
+                                    <option value="BOLSA" className="bg-[#F1EEE7] font-regular text-[#C33941]">bolsa</option>
+                                    <option value="CALCADO" className="bg-[#F1EEE7] font-regular text-[#C33941]">sapato</option>
+                                </select>
+                            </div>
 
-            <form className="max-w-md mx-auto py-10" onSubmit={handleSubmit(incluirProduto)}>
+                            <div>
+                                <label htmlFor="cor" className="block mb-2 text-sm font-normal text-[#C33941] dark:text-white pl-2">cor da peça</label>
+                                <input type="text" id="cor"
+                                    className="bg-[#F1EEE7] border border-[#C33941] text-[#C33941] rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-100 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    required
+                                    {...register("cor")} />
+                            </div>
 
-                <div className="relative z-0 w-full mb-5 group">
-                    <select
-                        id="tipo"
-                        defaultValue=""
-                        required
-                        {...register("tipo")}>
-                        <option value="" disabled hidden></option>
-                        <option value="CALCA" className="bg-[#D7A278] font-medium">Calça</option>
-                        <option value="BLUSA" className="bg-[#D7A278] font-medium">Blusa</option>
-                        <option value="ACESSORIO" className="bg-[#D7A278] font-medium">Acessório</option>
-                        <option value="SAIA" className="bg-[#D7A278] font-medium">Saia</option>
-                        <option value="VESTIDO" className="bg-[#D7A278] font-medium">Vestido</option>
-                        <option value="BOLSA" className="bg-[#D7A278] font-medium">Bolsa</option>
-                        <option value="CALCADO" className="bg-[#D7A278] font-medium">Sapato</option>
-                    </select>
+                            <div>
+                                <label htmlFor="marca" className="block mb-2 text-sm font-normal text-[#C33941] dark:text-white pl-2">marca (opcional)</label>
+                                <input type="text" id="marca"
+                                    className="bg-[#F1EEE7] border border-[#C33941] text-[#C33941] rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-100 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    {...register("marca")}
+                                />
+                            </div>
 
-                    <label
-                        htmlFor="tipo"
-                        className="peer-focus:font-medium absolute text-sm text-[#C33941] dark:text-[#C33941] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-[#D7A278] peer-focus:dark:text-[#C33941] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                    >
-                        Tipo da peça
-                    </label>
-                </div>
+                            <div>
+                                <label htmlFor="material" className="block mb-2 text-sm font-normal text-[#C33941] dark:text-white pl-2">material (opcional)</label>
+                                <input type="text" id="material"
+                                    className="bg-[#F1EEE7] border border-[#C33941] text-[#C33941] rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-100 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    {...register("material")}
+                                />
+                            </div>
 
-                <div className="relative z-0 w-full mb-5 group">
-                    <input type="text" id="cor" className="block py-2.5 px-0 w-full text-sm text-[#C33941] bg-transparent border-0 border-b-2 border-[#C33941] appearance-none dark:text-[#C33941] dark:border-[#C33941] dark:focus:border-[#D7A278] focus:outline-none focus:ring-0 focus:border-[#D7A278] peer font-medium" placeholder=" " required
-                        {...register("cor")} />
-                    <label htmlFor="" className="peer-focus:font-medium absolute text-sm text-[#C33941] dark:text-[#C33941] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-[#D7A278] peer-focus:dark:text-[#C33941] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cor da peça</label>
-                </div>
+                            <div>
+                                <label htmlFor="tamanho" className="block mb-2 text-sm font-normal text-[#C33941] dark:text-white pl-2">tamanho</label>
+                                <select id="tamanho" defaultValue="" required
+                                    className="bg-[#F1EEE7] border border-[#C33941] text-[#C33941] rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-100 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    {...register("tamanho")}>
+                                    <option value="" disabled hidden></option>
+                                    <option value="PP" className="bg-[#F1EEE7] font-regular text-[#C33941]">pp</option>
+                                    <option value="P" className="bg-[#F1EEE7] font-regular text-[#C33941]">p</option>
+                                    <option value="M" className="bg-[#F1EEE7] font-regular text-[#C33941]">m</option>
+                                    <option value="G" className="bg-[#F1EEE7] font-regular text-[#C33941]">g</option>
+                                    <option value="GG" className="bg-[#F1EEE7] font-regular text-[#C33941]">gg</option>
+                                    <option value="G1" className="bg-[#F1EEE7] font-regular text-[#C33941]">g1</option>
+                                </select>
+                            </div>
 
-                <div className="relative z-0 w-full mb-5 group">
-                    <input type="text" id="marca" className="block py-2.5 px-0 w-full text-sm text-[#C33941] bg-transparent border-0 border-b-2 border-[#C33941] appearance-none dark:text-white dark:border-[#C33941] dark:focus:border-[#C33941] focus:outline-none focus:ring-0 focus:border-[#D7A278] peer font-medium" placeholder=" "
-                        {...register("marca")}
-                    />
-                    <label htmlFor="marca" className="peer-focus:font-medium absolute text-sm text-[#C33941] dark:text-[#C33941] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-[#D7A278] peer-focus:dark:text-[#C33941] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Marca (Opcional)
-                    </label>
-                </div>
+                            <div>
+                                <label htmlFor="valor" className="block mb-2 text-sm font-normal text-[#C33941] dark:text-white pl-2">valor</label>
+                                <input type="number" id="valor"
+                                    className="bg-[#F1EEE7] border border-[#C33941] text-[#C33941] rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-100 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    required
+                                    {...register("valor", { valueAsNumber: true })}
+                                />
+                            </div>
 
-                <div className="relative z-0 w-full mb-5 group">
-                    <input type="text" id="material" className="block py-2.5 px-0 w-full text-sm text-[#C33941] bg-transparent border-0 border-b-2 border-[#C33941] appearance-none dark:text-white dark:border-[#C33941] dark:focus:border-[#C33941] focus:outline-none focus:ring-0 focus:border-[#D7A278] peer font-medium" placeholder=" "
-                        {...register("material")}
-                    />
-                    <label htmlFor="material" className="peer-focus:font-medium absolute text-sm text-[#C33941] dark:text-[#C33941] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-[#D7A278] peer-focus:dark:text-[#C33941] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Material (Opcional)
-                    </label>
-                </div>
 
-                <div className="grid md:grid-cols-2 md:gap-6">
+                            <div>
+                                <label htmlFor="foto" className="block mb-2 text-sm font-normal text-[#C33941] dark:text-white pl-2">foto (url)</label>
+                                <input type="text" id="foto"
+                                    className="bg-[#F1EEE7] border border-[#C33941] text-[#C33941] rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-100 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    required
+                                    {...register("foto")}
+                                />
+                            </div>
 
-                    <div className="relative z-0 w-full mb-5 group">
-                        <select id="tamanho" defaultValue="" required className="block py-2.5 px-0 w-full text-sm text-[#C33941] bg-transparent border-0 border-b-2 border-[#C33941] appearance-none dark:text-white dark:border-[#C33941] dark:focus:border-[#C33941] focus:outline-none focus:ring-0 focus:border-[#D7A278] peer font-medium"
-                            {...register("tamanho")}>
-                            <option value="" disabled hidden></option>
-                            <option value="PP" className="bg-[#D7A278] font-medium">PP</option>
-                            <option value="P" className="bg-[#D7A278] font-medium">P</option>
-                            <option value="M" className="bg-[#D7A278] font-medium">M</option>
-                            <option value="G" className="bg-[#D7A278] font-medium">G</option>
-                            <option value="GG" className="bg-[#D7A278] font-medium">GG</option>
-                            <option value="G1" className="bg-[#D7A278] font-medium">G1</option>
-                        </select>
-                        <label htmlFor="tamanho" className="peer-focus:font-medium absolute text-sm text-[#C33941] dark:text-[#C33941] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-[#D7A278] peer-focus:dark:text-[#C33941] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Tamanho</label>
+                            <button type="submit" className=" w-40 block mx-auto text-[#F1EEE7] bg-[#C33941] rounded-lg hover:bg-[#F1EEE7] hover:text-[#C33941] border border-[#C33941] focus:ring-4 focus:outline-none focus:ring-[#C33941] font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer">
+                                enviar!
+                            </button>
+                        </form>
                     </div>
-
-                    <div className="relative z-0 w-full mb-5 group">
-                        <input type="number" id="valor" className="block py-2.5 px-0 w-full text-sm text-[#C33941] bg-transparent border-0 border-b-2 border-[#C33941] appearance-none dark:text-white dark:border-[#C33941] dark:focus:border-[#C33941] focus:outline-none focus:ring-0 focus:border-[#D7A278] peer font-medium" placeholder=" " required
-                            {...register("valor", { valueAsNumber: true })}
-                        />
-                        <label htmlFor="valor" className="peer-focus:font-medium absolute text-sm text-[#C33941] dark:text-[#C33941] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[#D7A278] peer-focus:dark:text-[#C33941] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valor</label>
-                    </div>
                 </div>
-
-                <div className="relative z-0 w-full mb-5 group">
-                    <input type="text" id="foto" className="block py-2.5 px-0 w-full text-sm text-[#C33941] bg-transparent border-0 border-b-2 border-[#C33941] appearance-none dark:text-white dark:border-[#C33941] dark:focus:border-[#C33941] focus:outline-none focus:ring-0 focus:border-[#D7A278] peer font-medium" placeholder=" " required
-                        {...register("foto")}
-                    />
-                    <label htmlFor="foto" className="peer-focus:font-medium absolute text-sm text-[#C33941] dark:text-[#C33941] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[#D7A278] peer-focus:dark:text-[#C33941] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Foto (URL)</label>
-                </div>
-
-                <button type="submit" className="text-[#F1EEE7] bg-[#D7A278] hover:bg-[#C33941] hover:text-[#D7A278] border border-[#C33941] focus:ring-4 focus:outline-none focus:ring-[#D7A278] font-medium rounded-lg text-m w-full sm:w-auto px-7 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Enviar</button>
-            </form>
-
-            <div className="w-27"></div>
-
-
+            </div>
         </div>
     )
 }

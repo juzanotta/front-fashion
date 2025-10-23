@@ -27,7 +27,7 @@ export default function Favoritos() {
         if (Array.isArray(dados)) {
           const produtosFavoritos = dados.filter(
             (produto: ProdutoType) => {
-              const storageKey = `favorito-${produto.id}`;
+              const storageKey = `favorito-${cliente.id}-${produto.id}`;
               const storedValue = localStorage.getItem(storageKey);
               return storedValue ? JSON.parse(storedValue) : false;
             }

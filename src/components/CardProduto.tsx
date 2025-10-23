@@ -7,7 +7,7 @@ import { useClienteStore } from "../context/ClienteContext";
 export function CardProduto({ data }: { data: ProdutoType }) {
     const navigate = useNavigate();
     const { cliente } = useClienteStore();
-    const storageKey = `favorito-${data.id}`;
+    const storageKey = `favorito-${cliente.id}-${data.id}`;
 
     const [favoritado, setFavoritado] = useState(() => {
         const storedValue = localStorage.getItem(storageKey);

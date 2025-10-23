@@ -50,7 +50,7 @@ export function CardProduto({ data }: { data: ProdutoType }) {
     }
 
     return (
-        <div className="card bg-[#F1EEE7] border border-[#C33941] xl:w-75 lg:w-56 md:w-45">
+        <div className="card bg-[#F1EEE7] border border-[#C33941] xl:w-75 lg:w-56 md:w-45 h-135">
             <figure className="px-3 pt-3">
                 <img
                     src={data.foto}

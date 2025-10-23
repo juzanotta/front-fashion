@@ -7,7 +7,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 export default function CompraSucesso() {
   const { id: tentativaCompraId } = useParams();
   const navigate = useNavigate();
-  const [processando, setProcessando] = useState(true);
+  const [processando] = useState(true);
 
 useEffect(() => {
   async function finalizarCompra() {

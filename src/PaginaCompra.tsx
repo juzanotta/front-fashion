@@ -52,10 +52,10 @@ export default function PaginaCompra() {
         e.preventDefault();
         if (!produto) return;
 
-        const tentativaCompraId = `${Date.now()}-${Math.random().toString(36).substring(7)}`;
+        const tentativaCompraId = `${Date.now()}-${Math.random().toString(36).substring(2, 10)}`;
         const urlSucesso = `${siteUrl}/compra-sucesso/${tentativaCompraId}`;
         setUrlQrCode(urlSucesso);
-        
+
         localStorage.setItem(`compra-${tentativaCompraId}`, JSON.stringify({
             clienteId: cliente.id,
             produtoId: produto.id,

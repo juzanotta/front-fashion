@@ -9,22 +9,21 @@ export default function CompraSucesso() {
   const navigate = useNavigate();
   const [processando] = useState(true);
 
-useEffect(() => {
-  async function finalizarCompra() {
-    try {
-      const response = await fetch(`${apiUrl}/vendas/confirmar/${tentativaCompraId}`, { method: "POST" });
-      if (!response.ok) throw new Error("Erro ao confirmar compra.");
-
-      toast.success("Compra confirmada com sucesso!");
-      navigate("/sucesso");
-    } catch (err) {
-      toast.error("Erro ao processar a compra.");
-      navigate("/");
+  useEffect(() => {
+    async function finalizarCompra() {
+      try {
+        const response = await fetch(`${apiUrl}/vendas/confirmar/${tentativaCompraId}`, { method: "POST" });
+        if (!response.ok) throw new Error("Erro ao confirmar compra.");
+        toast.success("Compra confirmada!");
+        navigate("/sucesso");
+      } catch (err) {
+        toast.error("Erro ao processar a compra.");
+        navigate("/");
+      }
     }
-  }
 
-  finalizarCompra();
-}, [tentativaCompraId, navigate]);
+    finalizarCompra();
+  }, [tentativaCompraId, navigate]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-[#F1EEE7]">

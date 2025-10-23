@@ -4,14 +4,21 @@ import type { ProdutoType } from "./utils/ProdutoType";
 import { useClienteStore } from "./context/ClienteContext";
 import { InputPesquisa } from "./components/InputPesquisa";
 import { CardProduto } from "./components/CardProduto";
+import { Link } from "react-router-dom";
+
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Favoritos() {
   const [produtos, setProdutos] = useState<ProdutoType[]>([]);
-  const { logaCliente } = useClienteStore();
+  const { cliente } = useClienteStore();
 
   useEffect(() => {
+    if (!cliente.token) {
+      setProdutos([]);
+      return;
+    }
+
     async function buscaDados() {
       try {
         const response = await fetch(`${apiUrl}/produtos`);
@@ -30,47 +37,47 @@ export default function Favoritos() {
           setProdutos([]);
         }
 
-
       } catch (error) {
         console.error("Erro ao buscar produtos:", error);
       }
     }
     buscaDados();
+  }, [cliente.token]);
 
-    async function buscaCliente(id: string) {
-      try {
-        const response = await fetch(`${apiUrl}/clientes/${id}`);
-        const dados = await response.json();
-        logaCliente(dados);
-      } catch (error) {
-        console.error("Erro ao buscar cliente:", error)
-      }
+  const renderContent = () => {
+    if (!cliente.token) {
+      return (
+        <p className="col-span-full text-center text-gray-600">
+          Você precisa fazer <Link to="/login" className="underline text-[#C33941]">login</Link> para ver seus favoritos.
+        </p>
+      );
     }
 
-    if (localStorage.getItem("clienteKey")) {
-      const idCliente = localStorage.getItem("clienteKey");
-      buscaCliente(idCliente as string);
+    if (produtos.length === 0) {
+      return (
+        <p className="col-span-full text-center text-gray-600">
+          Você ainda não favoritou nenhum produto.
+        </p>
+      );
     }
-  }, [logaCliente]);
+
+    return produtos.map((produto) => (
+      <CardProduto data={produto} key={produto.id} />
+    ));
+  };
 
   return (
     <>
       <Titulo />
-      <div className="bg-[#F1EEE7] h-full px-33 py-23 ">
-        <div className="flex justify-between pb-9 items-center">
-          <h1 className="font-serif text-[#C33941] text-5xl w-30">
+      <div className="bg-[#F1EEE7] min-h-screen px-4 md:px-33 py-23 pt-24"> {/* Ajustado o padding para mobile */}
+        <div className="flex flex-col md:flex-row justify-between pb-9 items-center max-w-6xl mx-auto"> {/* Max-width para consistência */}
+          <h1 className="font-serif text-[#C33941] text-5xl w-auto mb-4 md:mb-0"> {/* Ajustado 'w-30' */}
             favoritos
           </h1>
-          <InputPesquisa setProdutos={setProdutos} />
+          {cliente.token && <InputPesquisa setProdutos={setProdutos} />}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-11 place-items-center mt-8">
-          {produtos.length > 0 ? (
-            produtos.map((produto) => (
-              <CardProduto data={produto} key={produto.id} />
-            ))
-          ) : (
-            <p className="text-gray-600">Nenhum produto favorito encontrado.</p>
-          )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-11 place-items-center mt-8 max-w-6xl mx-auto">
+          {renderContent()}
         </div>
       </div>
     </>

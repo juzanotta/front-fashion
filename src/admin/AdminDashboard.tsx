@@ -9,6 +9,11 @@ type graficoClienteType = {
   num: number
 }
 
+type graficoProdutoType = {
+  tipo: string
+  num: number
+}
+
 type geralDadosType = {
   clientes: number
   produtos: number
@@ -16,6 +21,7 @@ type geralDadosType = {
 }
 
 export default function AdminDashboard() {
+  const [produtoTipo, setProdutosTipo] = useState<graficoProdutoType[]>([])
   const [clientesCidade, setClientesCidade] = useState<graficoClienteType[]>([])
   const [dados, setDados] = useState<geralDadosType>({} as geralDadosType)
 
@@ -27,6 +33,13 @@ export default function AdminDashboard() {
     }
     getDadosGerais()
 
+    async function getDadosGraficoTipo() {
+      const response = await fetch(`${apiUrl}/dashboard/produtosTipo`)
+      const dados = await response.json()
+      setProdutosTipo(dados)
+    }
+    getDadosGraficoTipo()
+
     async function getDadosGraficoCliente() {
       const response = await fetch(`${apiUrl}/dashboard/clientesCidade`)
       const dados = await response.json()
@@ -36,14 +49,17 @@ export default function AdminDashboard() {
 
   }, [])
 
-    const listaClientesCidade = clientesCidade.map(item => (
+  const listaProdutosTipo = produtoTipo.map(item => (
+    { x: item.tipo, y: item.num }
+  ))
+
+  const listaClientesCidade = clientesCidade.map(item => (
     { x: item.cidade, y: item.num }
   ))
 
   return (
     <div className="container pt-24 pl-10">
       <h2 className="font-serif text-[#C33941] text-4xl pb-10">visão geral do sistema</h2>
-
       <div className="w-2/3 flex justify-between mx-auto mb-15 font-sans font-semibold">
         <div className="border-[#C33941] border rounded p-6 w-1/3 me-3">
           <span className="bg-[#C33941] text-[#F1EEE7] text-xl text-center mx-auto block px-2.5 py-5 rounded dark:bg-blue-900 dark:text-blue-300">
@@ -64,20 +80,37 @@ export default function AdminDashboard() {
 
       <div className="div-graficos">
         <svg viewBox="30 55 400 400">
+          <VictoryPie
+            standalone={false}
+            width={400}
+            height={400}
+            data={listaProdutosTipo}
+            innerRadius={50}
+            labelRadius={80}
+            theme={VictoryTheme.clean}
+            style={{
+              labels: {
+                fontSize: 10,
+                fill: "#fff",
+                fontFamily: "Work Sans",
+                fontWeight: "600",
+                textTransform: "lowercase"
+              }
+            }}
+          />
           <VictoryLabel
             textAnchor="middle"
             style={{
               fontSize: 12,
               fill: "#C33941",
               fontFamily: "Work Sans",
-              fontWeight: "600"
+              fontWeight: "600",
             }}
             x={200}
             y={200}
-            text={["produtos", "por marca"]}
+            text={["produtos", "por tipo"]} 
           />
         </svg>
-
         <svg viewBox="30 55 400 400">
           <VictoryPie
             standalone={false}

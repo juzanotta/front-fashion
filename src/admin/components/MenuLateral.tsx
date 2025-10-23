@@ -1,7 +1,6 @@
 import { useAdminStore } from "../context/AdminContext"
 import { IoExitOutline } from "react-icons/io5"
 import { BiSolidDashboard } from "react-icons/bi"
-import { FaUsers } from "react-icons/fa6"
 import { AiTwotoneSkin, AiTwotoneShopping } from "react-icons/ai";
 
 import { Link, useNavigate } from "react-router-dom"
@@ -38,12 +37,6 @@ export function MenuLateral() {
             </Link>
           </li>
           <li>
-          <Link to="/admin/clientes" className="flex items-center p-2">
-              <span className="h-5 text-[#F1EEE7] text-xl ">
-                <FaUsers />
-              </span>
-              <span className="font-sans text-[#F1EEE7] text-medium pl-2 font-normal">controle de clientes</span>
-            </Link>
           </li>
           <li>
           <Link to="/admin/vendas" className="flex items-center p-2 cursor-pointer">

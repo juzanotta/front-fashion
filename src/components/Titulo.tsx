@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom";
 
 export default function Titulo() {
-    const { deslogaCliente } = useClienteStore();
+    const { cliente, deslogaCliente } = useClienteStore();
     const navigate = useNavigate();
 
     function clienteSair() {
@@ -51,9 +51,16 @@ export default function Titulo() {
                         </div>
                         <ul
                             tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-30 p-2 shadow font-sans">
-                            <li><Link to="/login">Login</Link></li>
-                            <li><Link onClick={clienteSair} to="/login">Logout</Link></li>
+                            className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-40 p-2 shadow font-sans">
+                            {cliente.token ? (
+                                <>
+                                    <li><Link to="/meus-pedidos">Meus Pedidos</Link></li>
+                                    <li><Link onClick={clienteSair} to="#">Logout</Link></li>
+                                </>
+                            ) : (
+                                <li><Link to="/login">Login</Link></li>
+                            )}
+
                         </ul>
                     </div>
                 </div>

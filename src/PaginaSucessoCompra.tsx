@@ -20,11 +20,10 @@ export default function CompraSucesso() {
       const dadosCompra = JSON.parse(dadosCompraStr);
 
       try {
-        const response = await fetch(`${apiUrl}/compras`, {
+        const response = await fetch(`${apiUrl}/vendas`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${dadosCompra.token}`,
           },
           body: JSON.stringify({
             clienteId: dadosCompra.clienteId,
@@ -35,7 +34,10 @@ export default function CompraSucesso() {
         });
 
         if (!response.ok) {
-          throw new Error("Erro ao finalizar a compra.");
+          const erro = await response.json();
+          toast.error(erro.message || "Erro ao finalizar a compra.");
+          navigate("/");
+          return;
         }
 
         toast.success("Compra confirmada com sucesso!");

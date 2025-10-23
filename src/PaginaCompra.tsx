@@ -18,7 +18,6 @@ export default function PaginaCompra() {
     const [mostrarQrCode, setMostrarQrCode] = useState(false);
     const [urlQrCode, setUrlQrCode] = useState("");
 
-
     useEffect(() => {
         if (!cliente.token) {
             toast.error("Sessão expirada. Faça o login novamente.");
@@ -29,16 +28,16 @@ export default function PaginaCompra() {
         async function getProduto() {
             try {
                 const response = await fetch(`${apiUrl}/produtos/${produtoId}`);
-                if (!response.ok) {
-                    throw new Error("Produto não encontrado");
-                }
+                if (!response.ok) throw new Error("Produto não encontrado");
+
                 const produtoData = await response.json();
 
-                if (!produtoData.ativo) {
+                if (!produtoData?.ativo) {
                     toast.error("Que pena! Este item já foi vendido.");
                     navigate('/');
                     return;
                 }
+
                 setProduto(produtoData);
             } catch (error) {
                 toast.error("Produto não encontrado ou indisponível.");
@@ -56,15 +55,13 @@ export default function PaginaCompra() {
         const tentativaCompraId = `${Date.now()}-${Math.random().toString(36).substring(7)}`;
         const urlSucesso = `${siteUrl}/compra-sucesso/${tentativaCompraId}`;
         setUrlQrCode(urlSucesso);
-
-        const dadosCompraTemporarios = {
+        
+        localStorage.setItem(`compra-${tentativaCompraId}`, JSON.stringify({
             clienteId: cliente.id,
             produtoId: produto.id,
             pagamento: metodoPagamento,
-            valor: produto.valor,
-            token: cliente.token
-        };
-        localStorage.setItem(`compra-${tentativaCompraId}`, JSON.stringify(dadosCompraTemporarios));
+            valor: Number(produto.valor),
+        }));
 
         setMostrarQrCode(true);
     }
@@ -89,14 +86,11 @@ export default function PaginaCompra() {
     }
 
     let tipoExibicao = produto.tipo.toLowerCase();
-    if (produto.tipo === "CALCA") {
-        tipoExibicao = "calça";
-    } else if (produto.tipo === "CALCADO") {
-        tipoExibicao = "calçado";
-    }
+    if (produto.tipo === "CALCA") tipoExibicao = "calça";
+    else if (produto.tipo === "CALCADO") tipoExibicao = "calçado";
 
     return (
-        <div className='bg-[#F1EEE7]'>
+        <div className="bg-[#F1EEE7] min-h-screen">
             <div className="container mx-auto p-4 max-w-4xl pt-22">
                 <form onSubmit={iniciarCompra} className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
@@ -112,7 +106,7 @@ export default function PaginaCompra() {
                                 <p className="font-sans text-[#C33941] text-lg">
                                     {produto.tamanho} | R$ {Number(produto.valor).toLocaleString("pt-br", { minimumFractionDigits: 2 })}
                                 </p>
-                                <div className='flex-row'>
+                                <div className="flex-row">
                                     {produto.marca && (
                                         <div className="badge badge-outline mr-2 text-[#C33941] py-3">
                                             {produto.marca}
@@ -133,6 +127,7 @@ export default function PaginaCompra() {
                             <p className="text-gray-700">{cliente.endereco}, {cliente.cidade}</p>
                         </div>
                     </div>
+
                     <div className="p-6 bg-[#F1EEE7] rounded-lg shadow-md border border-[#C33941]">
                         {!mostrarQrCode ? (
                             <>
@@ -181,7 +176,7 @@ export default function PaginaCompra() {
                                 <p className="text-center mb-4 text-gray-600">
                                     escaneie o código abaixo com a câmera do seu celular ou app de pagamento para finalizar a compra.
                                 </p>
-                                <QRCodeCanvas value={urlQrCode} size={256} className='p-2 rounded-2xl border-2 border-[#C33941] bg-white'/>
+                                <QRCodeCanvas value={urlQrCode} size={256} className="p-2 rounded-2xl border-2 border-[#C33941] bg-white" />
                                 <p className="mt-4 text-sm text-gray-500">aguardando confirmação...</p>
                                 <button
                                     type="button"

@@ -6,16 +6,15 @@ export function Titulo() {
   const { admin } = useAdminStore()
 
   return (
-    <nav className="bg-blue-400 border-gray-200 dark:bg-gray-900 flex flex-wrap justify-between fixed top-0 left-0 w-full z-50">
-      <div className="flex flex-wrap justify-between max-w-screen-xl p-4">
-        <Link to="/admin" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="./fusca.png" className="h-16" alt="Fusca" />
-          <span className="self-center text-3xl font-semibold whitespace-nowrap dark:text-white">
-            Avenida Fashion: Admin
-          </span>
-        </Link>
-      </div>
-      <div className="flex me-4 items-center font-bold">
+    <nav className="bg-[#C33941] flex flex-wrap justify-between fixed top-0 left-0 w-full z-50 px-12 py-4">
+      <Link to="/admin" className="flex items-center space-x-3 rtl:space-x-reverse">
+        <span className="font-sans text-[#F1EEE7] text-xl font-medium">
+          página da admin
+        </span>
+      </Link>
+      <img src="./avenida.png" className="h-8.5 " alt="avenida" />
+
+      <div className="flex me-4 items-center font-regular font-sans text-[#F1EEE7]">
         <FiUsers className="mr-2" />
         {admin.nome}
       </div>

@@ -18,48 +18,48 @@ export function MenuLateral() {
   }
 
   return (
-    <aside id="default-sidebar" className="fixed mt-24 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-      <div className="h-full px-3 py-4 overflow-y-auto bg-blue-300 dark:bg-gray-800">
-        <ul className="space-y-2 font-medium">
+    <aside id="default-sidebar" className="fixed mt-16 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+      <div className="h-full px-3 py-15 overflow-y-auto bg-[#C33941] dark:bg-gray-800">
+        <ul className="space-y-2">
         <li>
             <Link to="/admin" className="flex items-center p-2">
-              <span className="h-5 text-gray-600 text-2xl">
+              <span className="h-5 text-[#F1EEE7] text-xl ">
                 <BiSolidDashboard />
               </span>
-              <span className="ms-2 mt-1">Visão Geral</span>
+              <span className="font-sans text-[#F1EEE7] text-medium pl-2 font-normal">visão geral</span>
             </Link>
           </li>
           <li>
             <Link to="/admin/produtos" className="flex items-center p-2">
-              <span className="h-5 text-gray-600 text-2xl">
+              <span className="h-5 text-[#F1EEE7] text-xl ">
                 <AiTwotoneSkin />
               </span>
-              <span className="ms-2 mt-1">Incluir Produto</span>
+              <span className="font-sans text-[#F1EEE7] text-medium pl-2 font-normal">incluir produto</span>
             </Link>
           </li>
           <li>
           <Link to="/admin/clientes" className="flex items-center p-2">
-              <span className="h-5 text-gray-600 text-2xl">
+              <span className="h-5 text-[#F1EEE7] text-xl ">
                 <FaUsers />
               </span>
-              <span className="ms-2 mt-1">Controle de Clientes</span>
+              <span className="font-sans text-[#F1EEE7] text-medium pl-2 font-normal">controle de clientes</span>
             </Link>
           </li>
           <li>
           <Link to="/admin/vendas" className="flex items-center p-2 cursor-pointer">
-              <span className="h-5 text-gray-600 text-2xl">
+              <span className="h-5 text-[#F1EEE7] text-xl ">
                 <AiTwotoneShopping />
               </span>
-              <span className="ms-2 mt-1">Controle de Vendas</span>
+              <span className="font-sans text-[#F1EEE7] text-medium pl-2 font-normal">controle de vendas</span>
             </Link>
           </li>
 
           <li>
             <span className="flex items-center p-2 cursor-pointer">
-              <span className="h-5 text-gray-600 text-2xl">
+              <span className="h-5 text-[#F1EEE7] text-xl ">
                 <IoExitOutline />
               </span>
-              <span className="ms-2 mt-1" onClick={adminSair}>Sair do Sistema</span>
+              <span className="font-sans text-[#F1EEE7] text-medium pl-2 font-normal" onClick={adminSair}>sair do sistema</span>
             </span>
           </li>
         </ul>

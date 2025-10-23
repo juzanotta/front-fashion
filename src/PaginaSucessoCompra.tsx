@@ -22,9 +22,7 @@ export default function CompraSucesso() {
       try {
         const response = await fetch(`${apiUrl}/vendas`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             clienteId: dadosCompra.clienteId,
             produtoId: dadosCompra.produtoId,
@@ -40,7 +38,7 @@ export default function CompraSucesso() {
           return;
         }
 
-        toast.success("Compra confirmada com sucesso!");
+        toast.success("Compra confirmada com sucesso! Verifique seu e-mail.");
         localStorage.removeItem(`compra-${tentativaCompraId}`);
         navigate(`/sucesso`);
       } catch (err) {

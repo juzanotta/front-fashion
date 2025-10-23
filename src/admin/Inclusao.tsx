@@ -61,7 +61,7 @@ export default function Inclusao() {
         <div className="bg-[#F1EEE7] min-h-screen pt-24 pl-10  flex">
 
             <h1 className="font-serif text-[#C33941] text-4xl  ">novo produto</h1>
-            <div className="flex flex-col items-center flex-grow pr-105 pt-5">
+            <div className="flex flex-col items-center pr-105 pt-5">
                 <div className=" rounded-lg  dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <form className="space-y-4 md:space-y-6"
@@ -143,7 +143,7 @@ export default function Inclusao() {
                                 />
                             </div>
 
-                            <button type="submit" className=" w-40 block mx-auto text-[#F1EEE7] bg-[#C33941] rounded-lg hover:bg-[#F1EEE7] hover:text-[#C33941] border border-[#C33941] focus:ring-4 focus:outline-none focus:ring-[#C33941] font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer">
+                            <button type="submit" className=" w-40 block mx-auto text-[#F1EEE7] bg-[#C33941] hover:bg-[#F1EEE7] hover:text-[#C33941] border border-[#C33941] focus:ring-4 focus:outline-none focus:ring-[#C33941] font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer">
                                 enviar!
                             </button>
                         </form>

@@ -48,22 +48,32 @@ export default function PaginaCompra() {
         getProduto();
     }, [produtoId, cliente.token, navigate]);
 
-    function iniciarCompra(e: React.FormEvent) {
+    async function iniciarCompra(e: React.FormEvent) {
         e.preventDefault();
         if (!produto) return;
 
-        const tentativaCompraId = `${Date.now()}-${Math.random().toString(36).substring(2, 10)}`;
-        const urlSucesso = `${siteUrl}/compra-sucesso/${tentativaCompraId}`;
-        setUrlQrCode(urlSucesso);
+        try {
+            const response = await fetch(`${apiUrl}/vendas/tentativa`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${cliente.token}`,
+                },
+                body: JSON.stringify({
+                    clienteId: cliente.id,
+                    produtoId: produto.id,
+                    pagamento: metodoPagamento,
+                    valor: produto.valor
+                }),
+            });
 
-        localStorage.setItem(`compra-${tentativaCompraId}`, JSON.stringify({
-            clienteId: cliente.id,
-            produtoId: produto.id,
-            pagamento: metodoPagamento,
-            valor: Number(produto.valor),
-        }));
+            const data = await response.json();
+            setUrlQrCode(`${siteUrl}/compra-sucesso/${data.id}`);
+            setMostrarQrCode(true);
 
-        setMostrarQrCode(true);
+        } catch (err) {
+            toast.error("Erro ao gerar QR code de pagamento.");
+        }
     }
 
     function handleCancelarCompra() {

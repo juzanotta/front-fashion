@@ -9,50 +9,22 @@ export default function CompraSucesso() {
   const navigate = useNavigate();
   const [processando, setProcessando] = useState(true);
 
-  useEffect(() => {
-    async function finalizarCompra() {
-      const dadosCompraStr = localStorage.getItem(`compra-${tentativaCompraId}`);
-      if (!dadosCompraStr) {
-        toast.error("Não foi possível encontrar a compra.");
-        navigate("/");
-        return;
-      }
+useEffect(() => {
+  async function finalizarCompra() {
+    try {
+      const response = await fetch(`${apiUrl}/vendas/confirmar/${tentativaCompraId}`, { method: "POST" });
+      if (!response.ok) throw new Error("Erro ao confirmar compra.");
 
-      const dadosCompra = JSON.parse(dadosCompraStr);
-
-      try {
-        const response = await fetch(`${apiUrl}/vendas`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            clienteId: dadosCompra.clienteId,
-            produtoId: dadosCompra.produtoId,
-            pagamento: dadosCompra.pagamento,
-            valor: dadosCompra.valor,
-          }),
-        });
-
-        if (!response.ok) {
-          const erro = await response.json();
-          toast.error(erro.message || "Erro ao finalizar a compra.");
-          navigate("/");
-          return;
-        }
-
-        // Compra concluída com sucesso
-        toast.success("Compra confirmada! Verifique seu e-mail.");
-        localStorage.removeItem(`compra-${tentativaCompraId}`);
-        navigate("/sucesso");
-      } catch (err) {
-        toast.error("Erro ao processar o pagamento.");
-        navigate("/");
-      } finally {
-        setProcessando(false);
-      }
+      toast.success("Compra confirmada com sucesso!");
+      navigate("/sucesso");
+    } catch (err) {
+      toast.error("Erro ao processar a compra.");
+      navigate("/");
     }
+  }
 
-    finalizarCompra();
-  }, [tentativaCompraId, navigate]);
+  finalizarCompra();
+}, [tentativaCompraId, navigate]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-[#F1EEE7]">

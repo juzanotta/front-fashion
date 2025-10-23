@@ -15,7 +15,7 @@ export default function PaginaCompra() {
     const [produto, setProduto] = useState<ProdutoType | null>(null);
     const [metodoPagamento, setMetodoPagamento] = useState("PIX");
     const [mostrarQrCode, setMostrarQrCode] = useState(false);
-    const [tentativaId, setTentativaId] = useState<string>("");
+    const [urlQrCode, setUrlQrCode] = useState("");
 
     useEffect(() => {
         if (!cliente.token) {
@@ -26,16 +26,18 @@ export default function PaginaCompra() {
 
         async function getProduto() {
             try {
-                const res = await fetch(`${apiUrl}/produtos/${produtoId}`);
-                if (!res.ok) throw new Error("Produto não encontrado");
-                const data = await res.json();
-                if (!data.ativo) {
+                const response = await fetch(`${apiUrl}/produtos/${produtoId}`);
+                if (!response.ok) throw new Error("Produto não encontrado");
+                const produtoData = await response.json();
+
+                if (!produtoData.ativo) {
                     toast.error("Que pena! Este item já foi vendido.");
                     navigate('/');
                     return;
                 }
-                setProduto(data);
-            } catch {
+
+                setProduto(produtoData);
+            } catch (error) {
                 toast.error("Produto não encontrado ou indisponível.");
                 navigate('/');
             }
@@ -44,49 +46,37 @@ export default function PaginaCompra() {
         getProduto();
     }, [produtoId, cliente.token, navigate]);
 
-    async function iniciarCompra(e: React.FormEvent) {
+    function iniciarCompra(e: React.FormEvent) {
         e.preventDefault();
         if (!produto) return;
 
-        try {
-            const res = await fetch(`${apiUrl}/vendas/tentativa`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    clienteId: cliente.id,
-                    produtoId: produto.id,
-                    pagamento: metodoPagamento,
-                    valor: produto.valor
-                })
-            });
+        // QR code só precisa do ID do produto e do cliente
+        const qrData = JSON.stringify({
+            clienteId: cliente.id,
+            produtoId: produto.id,
+            pagamento: metodoPagamento,
+            valor: produto.valor
+        });
 
-            if (!res.ok) throw new Error("Erro ao criar tentativa de compra");
-            const data = await res.json();
-            setTentativaId(data.id);
-            setMostrarQrCode(true);
-
-        } catch (err) {
-            toast.error("Não foi possível iniciar a compra.");
-        }
+        setUrlQrCode(qrData);
+        setMostrarQrCode(true);
     }
 
     function handleCancelarCompra() {
         setMostrarQrCode(false);
-        setTentativaId("");
-        toast.info("A compra foi cancelada.");
+        setUrlQrCode("");
+        toast.info("Compra cancelada.");
     }
 
-    if (!produto) {
-        return (
-            <div className="flex justify-center items-center h-screen">
-                <span className="loading loading-spinner loading-lg text-[#C33941]"></span>
-            </div>
-        );
-    }
+    if (!produto) return (
+        <div className="flex justify-center items-center h-screen">
+            <span className="loading loading-spinner loading-lg text-[#C33941]"></span>
+        </div>
+    );
 
-    let tipoExibicao = produto.tipo.toLowerCase();
-    if (produto.tipo === "CALCA") tipoExibicao = "calça";
-    else if (produto.tipo === "CALCADO") tipoExibicao = "calçado";
+    const tipoExibicao = produto.tipo === "CALCA" ? "calça"
+                        : produto.tipo === "CALCADO" ? "calçado"
+                        : produto.tipo.toLowerCase();
 
     return (
         <div className='bg-[#F1EEE7]'>
@@ -117,15 +107,26 @@ export default function PaginaCompra() {
                             <p className="text-gray-700">{cliente.endereco}, {cliente.cidade}</p>
                         </div>
                     </div>
+
                     <div className="p-6 bg-[#F1EEE7] rounded-lg shadow-md border border-[#C33941]">
                         {!mostrarQrCode ? (
                             <>
                                 <h3 className="font-serif text-[#C33941] text-4xl pb-6">pagamento</h3>
-                                <select className="select select-auto" value={metodoPagamento} onChange={e => setMetodoPagamento(e.target.value)} required>
-                                    <option value="PIX">PIX</option>
-                                    <option value="CREDITO">cartão de crédito</option>
-                                    <option value="DEBITO">cartão de débito</option>
-                                </select>
+                                <div className="form-control w-full">
+                                    <label className="label">
+                                        <span className="label-text text-gray-700 mb-3">escolha o método de pagamento:</span>
+                                    </label>
+                                    <select
+                                        className="select select-auto"
+                                        value={metodoPagamento}
+                                        onChange={(e) => setMetodoPagamento(e.target.value)}
+                                        required
+                                    >
+                                        <option value="PIX">PIX</option>
+                                        <option value="CREDITO">Cartão de crédito</option>
+                                        <option value="DEBITO">Cartão de débito</option>
+                                    </select>
+                                </div>
 
                                 <div className="divider mb-5 mt-42"></div>
                                 <div className="space-y-2 text-lg">
@@ -149,8 +150,10 @@ export default function PaginaCompra() {
                         ) : (
                             <div className="flex flex-col items-center">
                                 <h3 className="font-serif text-[#C33941] text-3xl pb-6">confirme o pagamento</h3>
-                                <QRCodeCanvas value={`${window.location.origin}/compra-sucesso/${tentativaId}`} size={256} className='p-2 rounded-2xl border-2 border-[#C33941] bg-white'/>
-                                <p className="mt-4 text-sm text-gray-500">aguardando confirmação...</p>
+                                <p className="text-center mb-4 text-gray-600">
+                                    escaneie o QR code abaixo para finalizar a compra
+                                </p>
+                                <QRCodeCanvas value={urlQrCode} size={256} className='p-2 rounded-2xl border-2 border-[#C33941] bg-white'/>
                                 <button type="button" onClick={handleCancelarCompra} className="btn btn-lg bg-[#C33941] text-white hover:bg-[#a52e35] w-full mt-8">
                                     cancelar
                                 </button>

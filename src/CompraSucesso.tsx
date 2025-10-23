@@ -1,32 +1,40 @@
 import { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function CompraSucesso() {
-  const { id: tentativaCompraId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     async function finalizarCompra() {
       try {
-        const res = await fetch(`${apiUrl}/vendas/confirmar/${tentativaCompraId}`, {
+        // Recupera os dados do QR code do localStorage
+        const qrDataStr = localStorage.getItem("compra-qrcode");
+        if (!qrDataStr) throw new Error("Dados da compra não encontrados");
+
+        const dadosCompra = JSON.parse(qrDataStr);
+
+        const response = await fetch(`${apiUrl}/vendas`, {
           method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dadosCompra),
         });
 
-        if (!res.ok) throw new Error("Erro ao confirmar compra.");
+        if (!response.ok) throw new Error("Erro ao processar a compra");
 
         toast.success("Compra confirmada com sucesso!");
+        localStorage.removeItem("compra-qrcode");
         navigate("/sucesso");
       } catch (err) {
-        toast.error("Erro ao processar a compra.");
+        toast.error("Erro ao processar o pagamento.");
         navigate("/");
       }
     }
 
     finalizarCompra();
-  }, [tentativaCompraId, navigate]);
+  }, [navigate]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-[#F1EEE7]">

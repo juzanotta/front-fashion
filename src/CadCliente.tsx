@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, Toaster } from "sonner";
 import Titulo from "./components/Titulo";
+import { useClienteStore } from "./context/ClienteContext";
 
 type Inputs = {
     nome: string;
@@ -18,6 +19,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 export default function CadCliente() {
     const { register, handleSubmit } = useForm<Inputs>();
     const navigate = useNavigate();
+    const { logaCliente } = useClienteStore();
 
     async function cadastraCliente(data: Inputs) {
         if (data.senha != data.senha2) {
@@ -25,33 +27,68 @@ export default function CadCliente() {
             return;
         }
 
-        const response = await fetch(`${apiUrl}/clientes`, {
-            headers: { "Content-Type": "application/json" },
-            method: "POST",
-            body: JSON.stringify({
-                nome: data.nome,
-                cidade: data.cidade,
-                endereco: data.endereco,
-                telefone: data.telefone,
-                email: data.email,
-                senha: data.senha,
-            }),
-        });
+        try {
+            const responseCad = await fetch(`${apiUrl}/clientes`, {
+                headers: { "Content-Type": "application/json" },
+                method: "POST",
+                body: JSON.stringify({
+                    nome: data.nome,
+                    cidade: data.cidade,
+                    endereco: data.endereco,
+                    telefone: data.telefone,
+                    email: data.email,
+                    senha: data.senha,
+                }),
+            });
 
-        if (response.status === 201) {
-            toast.success("Usuário cadastrado com sucesso!");
+            if (responseCad.status === 201) {
+                const responseLogin = await fetch(`${apiUrl}/login`, {
+                    headers: { "Content-Type": "application/json" },
+                    method: "POST",
+                    body: JSON.stringify({
+                        email: data.email,
+                        senha: data.senha,
+                    }),
+                });
 
-            setTimeout(() => {
-                navigate("/login");
-            }, 1500);
-        } else {
-            toast.error("Erro... Não foi possível realizar o cadastro");
+                if (responseLogin.ok) {
+                    const loginData = await responseLogin.json();
+                    logaCliente(loginData);
+
+                    toast.success(`Bem-vindo(a), ${loginData.nome}!`);
+                    setTimeout(() => {
+                        navigate("/");
+                    }, 1500);
+
+                } else {
+                    toast.success("Cadastro realizado com sucesso!");
+                    setTimeout(() => {
+                        navigate("/login");
+                    }, 1500);
+                }
+
+            } else {
+                const erroData = await responseCad.json();
+
+                let mensagemErro = "Erro... Não foi possível realizar o cadastro";
+
+                if (erroData.erro && typeof erroData.erro === 'string') {
+                    mensagemErro = erroData.erro;
+                } else if (erroData.erro && erroData.erro.issues) {
+                    mensagemErro = erroData.erro.issues.map((e: any) => e.message).join('; ');
+                }
+
+                toast.error(mensagemErro);
+            }
+        } catch (error) {
+            toast.error("Erro... Usuário não foi cadastrado!");
+            console.error("Erro ao cadastrar:", error);
         }
     }
 
     return (
         <>
-        <Titulo />
+            <Titulo />
             <section className="bg-[#F1EEE7] dark:bg-gray-900 py-20 px-4">
                 <div className="w-full rounded-lg sm:max-w-md dark:bg-gray-800 dark:border dark:border-gray-700 mx-auto">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
